@@ -1,0 +1,17 @@
+.hero{
+  height: 100vh;
+  background-color: aqua;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.bg-overlay{
+  background-color: rgba(0,0,0,0.5);
+  position: relative;
+  height: 100%;
+  z-index: 10;
+}

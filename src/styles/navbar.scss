@@ -1,0 +1,29 @@
+.navbar {
+  transition: all 0.5s ease;
+}
+
+.navbar-toggler {
+  border: none;
+
+  &:focus {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    background-color: rgba(0,0,0,0.5) !important;
+  }
+
+  .navbar-brand {
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    span {
+      font-size: 1rem;
+    }
+  }
+}
