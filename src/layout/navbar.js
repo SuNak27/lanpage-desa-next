@@ -7,19 +7,21 @@ export default function Navbar() {
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const navbar = document.getElementById("navbar");
-      if (window.scrollY > 10) {
+      if (window.scrollY > 300) {
         navbar.classList.add("shadow");
-        navbar.classList.add("bg-primary");
+        navbar.classList.add("navbar-show");
+        navbar.classList.replace("navbar-dark", "navbar-light");
       } else {
+        navbar.classList.remove("navbar-show");
         navbar.classList.remove("shadow");
-        navbar.classList.remove("bg-primary");
+        navbar.classList.replace("navbar-light", "navbar-dark");
       }
     });
   }, []);
   return (
     <nav
       id="navbar"
-      className="navbar navbar-expand-lg navbar-dark position-fixed w-100 top-0"
+      className="navbar navbar-expand-lg navbar-light w-100"
       style={{
         zIndex: 9999,
       }}
@@ -29,11 +31,11 @@ export default function Navbar() {
           <Image
             src="/assets/images/logo.png"
             alt="Logo"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             className="logo"
           />
-          <span className="fw-bold ms-3">Lanpage Desa</span>
+          <span className="ms-3">Desa Karanganyar</span>
         </Link>
         <button
           className="navbar-toggler"

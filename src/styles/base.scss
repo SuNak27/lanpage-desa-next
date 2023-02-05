@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inter:400,500,600,700,800,900&display=swap');
 
 * {
   margin: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   color: $color-dark;
   font-size: 0.875rem;
   background-color: $color-light;
@@ -28,6 +28,12 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--bs-link-hover-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .mt-6 {

@@ -1,5 +1,23 @@
 .navbar {
-  transition: all 0.5s ease;
+  position: absolute;
+  animation: navbar-up 0.5s ease;
+
+  &.navbar-show {
+    background-color: $color-light;
+    position: fixed;
+    animation: navbar-down 0.5s ease;
+  }
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+
+  span {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+  }
 }
 
 .navbar-toggler {
@@ -11,11 +29,31 @@
   }
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    background-color: var(--bs-blue) !important;
+@keyframes navbar-down {
+  0% {
+    transform: translateY(-100%);
   }
+  100% {
+    transform: translateY(0);
+  }
+}
 
+@keyframes navbar-up {
+  0% {
+    position: fixed;
+    background-color: $color-light;
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+    position: absolute;
+  }
+}
+
+@media (max-width: 768px) {
   .navbar-brand {
     img {
       width: 40px;

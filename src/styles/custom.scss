@@ -11,7 +11,7 @@
 
   .hero-caption {
     bottom: 2.25rem;
-    top: 30%;
+    top: 20%;
     text-align: start;
     color: $color-light;
 
@@ -38,7 +38,7 @@
   z-index: 100;
 
   @media screen and (min-width: 900px) {
-    margin-top: -3rem;
+    margin-top: -10rem;
   }
 }
 

@@ -25,21 +25,21 @@ export default function Hero() {
               <div className="bg-overlay"></div>
               <div className="hero-caption position-relative">
                 <div className="container">
-                  <h1 className="hero-title">Selamat Datang di Website</h1>
-                  <h5 className="hero-text mb-5">
+                  <h1 className="fw-bold">Sistem Informasi Desa</h1>
+                  <h5 className="hero-text mb-3">
                     Karanganyar, Paiton, Probolinggo
                   </h5>
                   <a href="#" className="btn btn-primary">
                     Selengkapnya
                   </a>
 
-                  <div className="w-100 h-100 hero-jumlah mt-6">
+                  <div className="w-100 h-100 hero-jumlah mt-5">
                     <Swiper
                       modules={[Autoplay]}
                       spaceBetween={30}
                       slidesPerView={4}
                       autoplay={{
-                        delay: 2500,
+                        delay: 5500,
                         disableOnInteraction: false,
                       }}
                       className="hero-swiper"

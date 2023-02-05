@@ -73,4 +73,22 @@ const aparat = [
   }
 ]
 
-export { berita_baru, layanan, aparat }
+const faq = [
+  {
+    "id": 1,
+    "pertanyaan": "Permasalahan apa yang sering terjadi di desa ini?",
+    "jawaban": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."
+  },
+  {
+    "id": 2,
+    "pertanyaan": "Bagaimana cara mengajukan surat di desa ini?",
+    "jawaban": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."
+  },
+  {
+    "id": 3,
+    "pertanyaan": "Apakah desa ini memiliki fasilitas kesehatan?",
+    "jawaban": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."
+  },
+]
+
+export { berita_baru, layanan, aparat, faq }
