@@ -25,9 +25,9 @@ export default function Hero() {
               <div className="hero-caption position-relative">
                 <div className="container">
                   <h1 className="hero-title">Selamat Datang di Website</h1>
-                  <p className="hero-text">
+                  <h5 className="hero-text">
                     Karanganyar, Paiton, Probolinggo
-                  </p>
+                  </h5>
                   <a href="#" className="btn btn-primary">
                     Selengkapnya
                   </a>
@@ -40,7 +40,7 @@ export default function Hero() {
                         delay: 2500,
                         disableOnInteraction: false,
                       }}
-                      className="hero-swiper p-3"
+                      className="hero-swiper"
                       breakpoints={{
                         0: {
                           slidesPerView: 1,
