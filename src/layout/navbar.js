@@ -21,7 +21,7 @@ export default function Navbar() {
       id="navbar"
       className="navbar navbar-expand-lg navbar-dark position-fixed w-100 top-0"
       style={{
-        zIndex: 50,
+        zIndex: 9999,
       }}
     >
       <div className="container">

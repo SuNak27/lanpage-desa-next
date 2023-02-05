@@ -10,9 +10,9 @@
   }
 
   .hero-caption {
-    bottom: 1.25rem;
+    bottom: 2.25rem;
     top: 30%;
-    text-align: justify;
+    text-align: start;
     color: $color-light;
 
     .container .hero-jumlah {
@@ -21,6 +21,10 @@
       margin-bottom: 1rem;
       color: $color-dark;
 
+      @media (min-width: 768px) {
+        margin-bottom: 1rem;
+      }
+
       .hero-swiper .card {
         cursor: pointer;
       }
@@ -28,7 +32,43 @@
   }
 }
 
+// News
 .news {
-  margin-top: -3rem;
+  margin-top: 1.5rem;
   z-index: 100;
+
+  @media screen and (min-width: 900px) {
+    margin-top: -3rem;
+  }
+}
+
+.img-news {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// Layanan
+.card-layanan {
+  border-radius: 0.5rem;
+  background-color: $color-light;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+
+  &:hover {
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Footer
+.footer-wrapper {
+  background-color: #031121;
+  color: $color-light;
+  padding: 2rem 0;
+}
+
+footer {
+  .divider-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }

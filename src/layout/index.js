@@ -3,6 +3,7 @@ import Head from "next/head"
 import { useState } from "react"
 import Hero from "./hero"
 import Navbar from "./navbar"
+import Footer from "./footer"
 export default function Layout({ children }) {
   const [title, setTitle] = useState("Beranda")
 
@@ -10,7 +11,7 @@ export default function Layout({ children }) {
     <Context.Provider value={{ title, setTitle }}>
       <Head>
         <title>
-          {title} | Aplikasi Sistem Informasi Desa
+          {title}
         </title>
         <meta name="description" content="Aplikasi Sistem Informasi Desa" />
         <link rel="icon" href="/favicon.ico" />
@@ -18,6 +19,7 @@ export default function Layout({ children }) {
       <Navbar />
       <Hero />
       <main>{children}</main>
+      <Footer />
     </Context.Provider>
   )
 }

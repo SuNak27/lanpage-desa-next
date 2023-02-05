@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper';
 
 export default function Hero() {
   const image = [
@@ -25,7 +26,7 @@ export default function Hero() {
               <div className="hero-caption position-relative">
                 <div className="container">
                   <h1 className="hero-title">Selamat Datang di Website</h1>
-                  <h5 className="hero-text">
+                  <h5 className="hero-text mb-5">
                     Karanganyar, Paiton, Probolinggo
                   </h5>
                   <a href="#" className="btn btn-primary">
@@ -34,6 +35,7 @@ export default function Hero() {
 
                   <div className="w-100 h-100 hero-jumlah mt-6">
                     <Swiper
+                      modules={[Autoplay]}
                       spaceBetween={30}
                       slidesPerView={4}
                       autoplay={{
