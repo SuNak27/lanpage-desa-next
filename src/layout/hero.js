@@ -1,99 +1,98 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function Hero() {
-  const [photo, setPhoto] = useState([]);
-  const photos = "https://api.unsplash.com/photos/?client_id=" + process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
-  console.log(photo);
-
-  useEffect(() => {
-    fetch(photos)
-      .then((res) => res.json())
-      .then((data) => {
-        setPhoto(data);
-      });
-  }, []);
-
+  const image = [
+    '/assets/images/main-bg.jpg',
+    '/assets/images/1.jpg',
+    '/assets/images/2.jpg',
+  ]
   return (
-    // <section className="hero">
-    //   <Image
-    //     src="/assets/images/main-bg.jpg"
-    //     alt="Logo"
-    //     width="1000"
-    //     height="1000"
-    //     priority={false}
-    //     className="d-block h-100 w-100 position-absolute"
-    //   />
-
-    //   <div className="bg-overlay"></div>
-
-    //   <div className="container position-relative">
-    //     <div className="row">
-    //       <div className="col-lg-6 col-md-8 col-sm-10 mx-auto">
-    //         <div className="hero-content">
-    //           <h1 className="hero-title">Selamat Datang di Website Desa</h1>
-    //           <p className="hero-text">
-    //             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-    //             voluptates, quod, quia, voluptatibus quae voluptatem quibusdam
-    //             quidem quas quos nemo voluptatum. Quisquam, quae. Quisquam
-    //             voluptates, quod, quia, voluptatibus quae voluptatem quibusdam
-    //             quidem quas quos nemo voluptatum. Quisquam, quae.
-    //           </p>
-    //           <a href="#" className="btn btn-primary">
-    //             Selengkapnya
-    //           </a>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </section>
     <section className="hero">
       <div id="carouselExampleControls" className="carousel slide carousel-fade" data-bs-ride="carousel">
         <div className="carousel-inner">
-          {photo.map((photo) => {
-            return (
-              <div className="carousel-item active" data-bs-interval="2000" key={photo.id}>
-                <Image
-                  src={photo.urls.full}
-                  alt="Logo"
-                  width="auto"
-                  height="auto"
-                  priority={false}
-                  className="d-block h-100 w-100 position-absolute"
-                />
-                <div className="bg-overlay"></div>
-                <div className="container position-relative">
-                  <div className="row">
-                    <div className="col-lg-6 col-md-8 col-sm-10 mx-auto">
-                      <div className="hero-content">
-                        <h1 className="hero-title">Selamat Datang di Website Desa</h1>
-                        <p className="hero-text">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                          voluptates, quod, quia, voluptatibus quae voluptatem quibusdam
-                          quidem quas quos nemo voluptatum. Quisquam, quae. Quisquam
-                          voluptates, quod, quia, voluptatibus quae voluptatem quibusdam
-                          quidem quas quos nemo voluptatum. Quisquam, quae.
-                        </p>
-                        <a href="#" className="btn btn-primary">
-                          Selengkapnya
-                        </a>
-                      </div>
-                    </div>
+          {image.map((item, index) => (
+            <div className="carousel-item active" data-bs-interval="2000" key={index}>
+              <Image
+                src={item}
+                alt="Logo"
+                width={1366}
+                height={768}
+                priority={false}
+                className="d-block h-100 w-100 position-absolute"
+              />
+              <div className="bg-overlay"></div>
+              <div className="hero-caption position-relative">
+                <div className="container">
+                  <h1 className="hero-title">Selamat Datang di Website</h1>
+                  <p className="hero-text">
+                    Karanganyar, Paiton, Probolinggo
+                  </p>
+                  <a href="#" className="btn btn-primary">
+                    Selengkapnya
+                  </a>
+
+                  <div className="w-100 h-100 hero-jumlah mt-6">
+                    <Swiper
+                      spaceBetween={30}
+                      slidesPerView={4}
+                      autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                      }}
+                      className="hero-swiper p-3"
+                      breakpoints={{
+                        0: {
+                          slidesPerView: 1,
+                        },
+                        520: {
+                          slidesPerView: 2,
+                        },
+                        900: {
+                          slidesPerView: 4,
+                        },
+                      }}
+                    >
+                      <SwiperSlide>
+                        <div className="card rounded-lg">
+                          <div className="card-body text-center">
+                            <h5 className="card-title">Penduduk</h5>
+                            <p className="card-text">2.000.000</p>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                      <SwiperSlide>
+                        <div className="card rounded-lg">
+                          <div className="card-body text-center">
+                            <h5 className="card-title">Penduduk</h5>
+                            <p className="card-text">2.000.000</p>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                      <SwiperSlide>
+                        <div className="card rounded-lg">
+                          <div className="card-body text-center">
+                            <h5 className="card-title">Penduduk</h5>
+                            <p className="card-text">2.000.000</p>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                      <SwiperSlide>
+                        <div className="card rounded-lg">
+                          <div className="card-body text-center">
+                            <h5 className="card-title">Penduduk</h5>
+                            <p className="card-text">2.000.000</p>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    </Swiper>
                   </div>
                 </div>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
       </div>
-    </section>
+    </section >
   )
 }

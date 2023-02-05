@@ -9,10 +9,10 @@ export default function Navbar() {
       const navbar = document.getElementById("navbar");
       if (window.scrollY > 10) {
         navbar.classList.add("shadow");
-        navbar.classList.add("bg-danger");
+        navbar.classList.add("bg-primary");
       } else {
         navbar.classList.remove("shadow");
-        navbar.classList.remove("bg-danger");
+        navbar.classList.remove("bg-primary");
       }
     });
   }, []);
