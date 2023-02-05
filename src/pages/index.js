@@ -1,13 +1,13 @@
 import Image from 'next/image'
-import { berita_baru, layanan } from '@/dummy/data'
+import { aparat, berita_baru, layanan } from '@/dummy/data'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper';
 
 export default function Home() {
   const data = berita_baru;
   const dataLayanan = layanan;
+  const aparatur = aparat;
   function image(image) {
-    console.log(image);
     if (image !== '') {
       return (
         <img
@@ -90,10 +90,10 @@ export default function Home() {
 
           <Swiper
             modules={[Pagination, Autoplay]}
-            slidesPerView={'auto'}
+            slidesPerView={3}
+            loop={false}
             pagination={{ clickable: true }}
-            loop={true}
-            space-between="30"
+            spaceBetween={30}
             autoplay={{
               delay: 1000,
               disableOnInteraction: false,
@@ -134,6 +134,68 @@ export default function Home() {
           </Swiper>
         </div >
       </section >
+
+      <div class="landing-curve">
+        <svg viewBox="15 -1 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z" fill="currentColor"></path>
+        </svg>
+      </div>
+      <section className="aparat text-white">
+        <div className="container py-6">
+          <div className="d-flex justify-content-between align-items-center flex-wrap">
+            <div className="text-center w-100">
+              <h1 className="fw-bold">Aparatur Desa</h1>
+            </div>
+            {/* <a href="#" className="btn btn-primary">Selengkapnya</a>  */}
+          </div>
+
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            slidesPerView={'auto'}
+            pagination={{ clickable: true }}
+            loop={false}
+            space-between="30"
+            autoplay={{
+              delay: 1000,
+            }}
+            className="p-5"
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            }}
+          >
+            {aparatur?.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div class="text-center text-white">
+                  <div class="octagon mx-auto mb-3 d-flex bg-success" style={{ width: 200, height: 200 }}>
+                    <img
+                      src={item.image}
+                    />
+                  </div>
+                  <div class="mb-0">
+                    <a href="#" class="text-white text-decoration-none fw-bold text-hover-primary fs-3">
+                      {item.nama}
+                    </a>
+                    <div class="text-muted fs-6 fw-semibold mt-1">{item.jabatan}</div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
+      <div class="landing-curve">
+        <svg viewBox="15 12 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z" fill="currentColor"></path>
+        </svg>
+      </div>
     </>
   )
 }

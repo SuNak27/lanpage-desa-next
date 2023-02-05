@@ -46,4 +46,31 @@ const layanan = [
   }
 ]
 
-export { berita_baru, layanan }
+const aparat = [
+  {
+    "id": 1,
+    "image": "https://picsum.photos/300/300",
+    "nama": "M. Fauzi",
+    "jabatan": "Kepala Desa",
+  },
+  {
+    "id": 2,
+    "image": "https://picsum.photos/300/300",
+    "nama": "Taufik",
+    "jabatan": "Sekretaris Desa",
+  },
+  {
+    "id": 3,
+    "image": "https://picsum.photos/300/300",
+    "nama": "Rahmat",
+    "jabatan": "Kepala Urusan Pemerintahan",
+  },
+  {
+    "id": 4,
+    "image": "https://picsum.photos/300/300",
+    "nama": "Siti",
+    "jabatan": "Kepala Urusan Keuangan",
+  }
+]
+
+export { berita_baru, layanan, aparat }
