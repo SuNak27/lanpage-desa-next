@@ -14,7 +14,7 @@ export default function Header(props) {
         {props.title}
       </title>
       <meta name="description" content="Aplikasi Sistem Informasi Desa" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/assets/images/logo.png" />
     </Head>
   )
 }
