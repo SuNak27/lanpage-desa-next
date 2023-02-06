@@ -21,7 +21,7 @@ export default function Navbar() {
   return (
     <nav
       id="navbar"
-      className="navbar navbar-expand-lg navbar-light w-100"
+      className="navbar navbar-expand-lg navbar-dark w-100"
       style={{
         zIndex: 9999,
       }}
