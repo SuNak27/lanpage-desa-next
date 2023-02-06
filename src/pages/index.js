@@ -246,7 +246,7 @@ export default function Home() {
             <div className="col-lg-8">
               <div className="accordion" id="accordionPanelsStayOpenExample">
                 {faqs?.map((item, index) => (
-                  <div className="accordion-item">
+                  <div className="accordion-item" key={index}>
                     <h2 className="accordion-header" id={'faq_' + index}>
                       <button className={`accordion-button ${index != 0 ? 'collapsed' : ''}`} type="button" data-bs-toggle="collapse" data-bs-target={`#item_${index}`} aria-expanded={index == 0} aria-controls={`item_${index}`}>
                         {item.pertanyaan}
