@@ -23,7 +23,7 @@ export default function AparaturDesa() {
               </thead>
               <tbody>
                 {dataJabatan.map((item, index) => (
-                  <tr>
+                  <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>
                     <td>{item.nip}</td>
                     <td>{item.nama}</td>
