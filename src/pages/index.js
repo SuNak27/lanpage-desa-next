@@ -11,7 +11,7 @@ export default function Home() {
   function image(image) {
     if (image !== "") {
       return (
-        <Image alt="image" width={100} height={100} src={image ?? ''} className="d-block h-100 w-100 img-news rounded-4" />
+        <Image alt="image" width={300} height={300} src={image ?? ''} className="d-block h-100 w-100 img-news rounded-4" />
       );
     }
   }
@@ -177,7 +177,7 @@ export default function Home() {
                     className="octagon mx-auto mb-3 d-flex bg-success"
                     style={{ width: 200, height: 200 }}
                   >
-                    <Image width={100} height={100} alt="foto" src={item.image} />
+                    <Image width={300} height={300} alt="foto" src={item.image} />
                   </div>
                   <div className="mb-0">
                     <a
