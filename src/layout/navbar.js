@@ -55,6 +55,31 @@ export default function Navbar() {
                 Beranda
               </ActiveLink>
             </li>
+            <li class="nav-item dropdown">
+              {/* <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Tentang Kami
+              </a> */}
+              <ActiveLink activeClassName="active" exactactiveclassname='active' className="nav-link dropdown-toggle" aria-expanded="false" href="/tentang-kami">
+                Tentang Kami
+              </ActiveLink>
+              <ul class="dropdown-menu fade-up">
+                <li>
+                  <ActiveLink activeClassName="active" className="dropdown-item" href="/tentang-kami">
+                    Tentang Kami
+                  </ActiveLink>
+                </li>
+                <li>
+                  <ActiveLink activeClassName="active" className="dropdown-item" href="/tentang-kami/visi-misi">
+                    Visi Misi
+                  </ActiveLink>
+                </li>
+                <li>
+                  <ActiveLink activeClassName="active" className="dropdown-item" href="/tentang-kami/aparatur-desa">
+                    Aparatur Desa
+                  </ActiveLink>
+                </li>
+              </ul>
+            </li>
             {/* <li className="nav-item">
               <a className="nav-link" href="#">
                 Link

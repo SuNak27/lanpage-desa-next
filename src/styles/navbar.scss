@@ -2,10 +2,57 @@
   position: absolute;
   animation: navbar-up 0.5s ease;
 
+  .container .navbar-collapse .navbar-nav .nav-item .nav-link {
+    // background-color: red;
+    font-weight: 600;
+    color: rgb(192, 192, 192);
+
+    &.active {
+      color: $color-primary !important;
+    }
+  }
+
   &.navbar-show {
     background-color: $color-light;
     position: fixed;
     animation: navbar-down 0.5s ease;
+
+    .container .navbar-collapse .navbar-nav .nav-item .nav-link {
+      color: rgb(179, 179, 179);
+
+      &.active {
+        color: $color-primary !important;
+        background-color: $color-light-primary;
+        border-radius: 0.5rem;
+      }
+    }
+  }
+}
+
+.navbar-nav .nav-item {
+
+  &:hover {
+    .dropdown-menu {
+      transition: .3s;
+      opacity: 1;
+      visibility: visible;
+      top: 100%;
+      transform: rotateX(0deg);
+    }
+  }
+
+  .nav-link {
+    font-weight: 600;
+    color: #9fa2b5;
+    padding: 0.5rem 1rem;
+
+    &:hover {
+      color: $color-primary !important;
+    }
+
+    &:focus {
+      color: $color-primary !important;
+    }
   }
 }
 
@@ -29,10 +76,47 @@
   }
 }
 
+.dropdown-menu {
+  background-color: $color-light;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0.5rem;
+
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+  margin-top: 0;
+
+  &.fade-up {
+    top: 180%;
+  }
+
+  .dropdown-item {
+    color: $color-dark;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem 0;
+    border-radius: 0.5rem;
+
+    &:hover:not(.active) {
+      background-color: $color-light-primary;
+      color: $color-primary;
+    }
+
+    &.active {
+      background-color: $color-light-primary;
+      color: $color-primary;
+    }
+  }
+}
+
 @keyframes navbar-down {
   0% {
     transform: translateY(-100%);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -44,9 +128,11 @@
     background-color: $color-light;
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-100%);
   }
+
   100% {
     transform: translateY(0);
     position: absolute;

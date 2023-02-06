@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const ActiveLink = ({ children, activeClassName, ...props }) => {
-  const { asPath } = useRouter()
+  const { asPath, pathname } = useRouter()
   // pages/index.js will be matched via props.href
   // pages/about.js will be matched via props.href
   // pages/[slug].js will be matched via props.as
@@ -13,8 +13,10 @@ const ActiveLink = ({ children, activeClassName, ...props }) => {
       ? `${props.className} ${activeClassName}`.trim()
       : props.className
 
+  const exactActiveClass = pathname.startsWith(props.href) && props.href !== '/' ? `${props.exactactiveclassname}`.trim() : ''
+
   return (
-    <Link {...props} className={className}>
+    <Link {...props} className={`${className} ${exactActiveClass}`}>
       {children}
     </Link>
   )

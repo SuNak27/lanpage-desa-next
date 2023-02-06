@@ -2,6 +2,7 @@ import Image from "next/image";
 import { aparat, berita_baru, faq, layanan } from "@/dummy/data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
+import Header from "@/layout/header";
 
 export default function Home() {
   const data = berita_baru;
@@ -17,6 +18,7 @@ export default function Home() {
   }
   return (
     <>
+      <Header title={'Beranda'}></Header>
       <section className="news position-relative">
         <div className="container">
           <div className="row">
