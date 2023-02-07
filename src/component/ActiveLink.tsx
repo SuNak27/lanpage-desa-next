@@ -1,9 +1,16 @@
 import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
 import Link from 'next/link'
-import React from 'react'
 
-const ActiveLink = ({ children, activeClassName, ...props }) => {
+type ActiveLinkProps = {
+  activeClassName: string
+  exactactiveclassname?: string
+  children: React.ReactNode
+  href: string
+  as?: string
+  className?: string
+}
+
+const ActiveLink = ({ children, activeClassName, ...props }: ActiveLinkProps) => {
   const { asPath, pathname } = useRouter()
   // pages/index.js will be matched via props.href
   // pages/about.js will be matched via props.href
@@ -20,10 +27,6 @@ const ActiveLink = ({ children, activeClassName, ...props }) => {
       {children}
     </Link>
   )
-}
-
-ActiveLink.propTypes = {
-  activeClassName: PropTypes.string.isRequired,
 }
 
 export default ActiveLink

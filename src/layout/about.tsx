@@ -1,6 +1,6 @@
 import ActiveLink from "@/component/ActiveLink";
 
-export default function AboutLayout({ children }) {
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="container m-5 p-5">

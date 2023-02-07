@@ -6,15 +6,15 @@ import { useEffect } from "react";
 export default function Navbar() {
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      const navbar = document.getElementById("navbar");
+      const navbar: HTMLElement | null = document.getElementById("navbar");
       if (window.scrollY > 300) {
-        navbar.classList.add("shadow");
-        navbar.classList.add("navbar-show");
-        navbar.classList.replace("navbar-dark", "navbar-light");
+        navbar?.classList.add("shadow");
+        navbar?.classList.add("navbar-show");
+        navbar?.classList.replace("navbar-dark", "navbar-light");
       } else {
-        navbar.classList.remove("navbar-show");
-        navbar.classList.remove("shadow");
-        navbar.classList.replace("navbar-light", "navbar-dark");
+        navbar?.classList.remove("navbar-show");
+        navbar?.classList.remove("shadow");
+        navbar?.classList.replace("navbar-light", "navbar-dark");
       }
     });
   }, []);
@@ -55,14 +55,14 @@ export default function Navbar() {
                 Beranda
               </ActiveLink>
             </li>
-            <li class="nav-item dropdown">
-              {/* <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li className="nav-item dropdown">
+              {/* <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Tentang Kami
               </a> */}
               <ActiveLink activeClassName="active" exactactiveclassname='active' className="nav-link dropdown-toggle" aria-expanded="false" href="/tentang-kami">
                 Tentang Kami
               </ActiveLink>
-              <ul class="dropdown-menu fade-up">
+              <ul className="dropdown-menu fade-up">
                 <li>
                   <ActiveLink activeClassName="active" className="dropdown-item" href="/tentang-kami">
                     Tentang Kami

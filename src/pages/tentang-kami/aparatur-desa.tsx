@@ -12,7 +12,7 @@ export default function AparaturDesa() {
         <h4 className="fw-semibold mb-4">Aparatur Desa</h4>
         <div className="row">
           <div className="col-lg-12">
-            <table class="table">
+            <table className="table">
               <thead>
                 <tr>
                   <th scope="col" className="text-center">No</th>

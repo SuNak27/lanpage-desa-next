@@ -1,3 +1,10 @@
+export type BeritaBaru = {
+  id: number,
+  title: string,
+  image: string,
+  content: string,
+}
+
 const berita_baru = [
   {
     "id": 1,

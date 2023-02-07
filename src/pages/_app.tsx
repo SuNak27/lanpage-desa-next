@@ -7,7 +7,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useEffect } from "react";
 
-export default function App({ Component, pageProps }) {
+export type AppProps = {
+  Component: React.ComponentType & { getLayout?: (page: React.ReactNode) => React.ReactNode };
+  pageProps: any;
+};
+
+export default function App({ Component, pageProps }: AppProps) {
   useEffect(
     () => {
       require("bootstrap/dist/js/bootstrap.bundle");

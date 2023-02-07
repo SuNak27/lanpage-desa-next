@@ -2,7 +2,7 @@ import { Context } from "@/utils/context";
 import Head from "next/head";
 import { useContext, useEffect } from "react";
 
-export default function Header(props) {
+export default function Header(props: { title: string }) {
   const { setTitle } = useContext(Context)
 
   useEffect(() => {

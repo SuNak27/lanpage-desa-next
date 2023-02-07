@@ -4,8 +4,13 @@ import { Autoplay } from "swiper";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import { Context } from "@/utils/context";
+import { Context, ContextType } from "@/utils/context";
 import ActiveLink from "@/component/ActiveLink";
+
+type PathArray = {
+  breadcrumb: string;
+  href: string;
+}[];
 
 export default function Hero() {
   const image = [
@@ -14,19 +19,29 @@ export default function Hero() {
     "/assets/images/2.jpg",
   ];
   const router = useRouter();
-  const { title } = useContext(Context);
-  const [breadcrumbs, setBreadcrumbs] = useState(null);
+  const { title } = useContext(Context) as unknown as ContextType;
+  const [breadcrumbs, setBreadcrumbs] = useState<PathArray>();
 
   useEffect(() => {
     if (router) {
       const linkPath = router.asPath.split('/');
       linkPath.shift();
 
-      const pathArray = linkPath.map((path, i) => {
-        return { breadcrumb: path, href: '/' + linkPath.slice(0, i + 1).join('/') };
+      // const pathArray = linkPath.map((path, i) => {
+      //   return { breadcrumb: path, href: '/' + linkPath.slice(0, i + 1).join('/') };
+      // });
+
+      // setBreadcrumbs(pathArray);
+
+      const pathArray: PathArray = linkPath.map((path, i) => {
+        return {
+          breadcrumb: path,
+          href: "/" + linkPath.slice(0, i + 1).join("/"),
+        };
       });
 
       setBreadcrumbs(pathArray);
+      
     }
   }, [router]);
 
@@ -34,13 +49,13 @@ export default function Hero() {
     return null;
   }
 
-  const convertBreadcrumb = string => {
+  const convertBreadcrumb = (string: string) => {
     return string
       .replace(/-/g, ' ')
       .replace(/oe/g, 'ö')
       .replace(/ae/g, 'ä')
       .replace(/ue/g, 'ü')
-      .replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+      .replace(/\w\S*/g, (txt: string) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   };
 
   if (router.pathname === "/") {
