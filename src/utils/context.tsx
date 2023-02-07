@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { InfoDesa, MasterData, TentangKami } from "./dataInterface";
+import { InfoDesa, MasterData, Statistik, TentangKami } from "./dataInterface";
 
 type ContextType = {
   title: string;
@@ -20,3 +20,4 @@ export const Context = createContext<ContextType>({
 });
 
 export const AboutContext = createContext<TentangKami | null>(null);
+export const StatistikContext = createContext<Statistik | null>(null);

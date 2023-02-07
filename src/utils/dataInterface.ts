@@ -54,7 +54,6 @@ export interface TentangKami {
   desa_struktural: DesaStruktural[],
 }
 
-
 export interface InfoDesa {
   nama_desa: string,
   nama_kecamatan: string,
@@ -90,4 +89,39 @@ export interface MasterData {
   nama_kecamatan: string,
   nama_kabupaten: string,
   nama_provinsi: string
+}
+
+type StatistikUmur = {
+  rentang_umur: string,
+  jumlah_penduduk: number,
+  persen_penduduk: string,
+  jumlah_penduduk_laki_laki: string,
+  jumlah_penduduk_perempuan: string,
+  persen_penduduk_laki_laki: string,
+  persen_penduduk_perempuan: string,
+}
+
+type StatistikAgama = {
+  agama: string,
+  jumlah_penduduk: number,
+  persen_penduduk: string,
+  jumlah_penduduk_laki_laki: string,
+  jumlah_penduduk_perempuan: string,
+  persen_penduduk_laki_laki: string,
+  persen_penduduk_perempuan: string,
+}
+
+export interface Statistik {
+  umur: {
+    data: StatistikUmur[],
+    jumlah_penduduk: number,
+    jumlah_penduduk_laki_laki: number,
+    jumlah_penduduk_perempuan: number,
+    persen_penduduk: number,
+    persen_penduduk_laki_laki: number,
+    persen_penduduk_perempuan: number
+  },
+  agama: {
+    data: StatistikAgama[],
+  }
 }

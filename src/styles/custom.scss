@@ -21,6 +21,15 @@
       opacity: 0.5;
     }
 
+    .bg-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
     .hero-caption {
       bottom: 2.25rem;
       top: 20%;
