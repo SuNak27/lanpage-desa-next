@@ -1,11 +1,11 @@
 import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
-import { Context } from "@/utils/context"
-import Head from "next/head"
-import { useContext, useEffect } from "react"
+import { useAppContext } from "@/utils/context";
+import { useEffect } from "react"
 
 export default function About() {
+  const { state } = useAppContext()
   return (
     <>
       <Header title="Tentang Kami" />
@@ -14,43 +14,7 @@ export default function About() {
         <div className="row">
           <div className="col-lg-12">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
-              Quisquam, quae. Quisquam, quae. Quisquam, quae. Quisquam,
-              quae. Quisquam, quae. Quisquam, quae. Quisquam, quae.
+              {state.data?.tentang_kami?.profil_desa}
             </p>
           </div>
         </div>
@@ -59,7 +23,7 @@ export default function About() {
   )
 }
 
-About.getLayout = function getLayout(page) {
+About.getLayout = function getLayout(page: React.ReactNode) {
   return (
     <Layout>
       <AboutLayout>

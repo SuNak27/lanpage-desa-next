@@ -2,9 +2,8 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import Link from "next/link";
-import { Context, ContextType } from "@/utils/context";
+import { useEffect, useState } from "react";
+import { useAppContext } from "@/utils/context";
 import ActiveLink from "@/component/ActiveLink";
 
 type PathArray = {
@@ -19,19 +18,12 @@ export default function Hero() {
     "/assets/images/2.jpg",
   ];
   const router = useRouter();
-  const { title } = useContext(Context) as unknown as ContextType;
+  const { state } = useAppContext();
   const [breadcrumbs, setBreadcrumbs] = useState<PathArray>();
-
   useEffect(() => {
     if (router) {
       const linkPath = router.asPath.split('/');
       linkPath.shift();
-
-      // const pathArray = linkPath.map((path, i) => {
-      //   return { breadcrumb: path, href: '/' + linkPath.slice(0, i + 1).join('/') };
-      // });
-
-      // setBreadcrumbs(pathArray);
 
       const pathArray: PathArray = linkPath.map((path, i) => {
         return {
@@ -41,7 +33,7 @@ export default function Hero() {
       });
 
       setBreadcrumbs(pathArray);
-      
+
     }
   }, [router]);
 
@@ -183,7 +175,7 @@ export default function Hero() {
                 <div className="hero-caption position-relative">
                   <div className="container">
                     <h3 className="fw-bold mt-5">
-                      {title}
+                      {state?.title ? state?.title : "Sistem Informasi Desa"}
                     </h3>
                     <nav aria-label="breadcrumb">
                       <ol className="breadcrumb">

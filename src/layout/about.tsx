@@ -1,6 +1,20 @@
 import ActiveLink from "@/component/ActiveLink";
+import { useAppContext } from "@/utils/context";
+import { useEffect } from "react";
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {
+  const { commit } = useAppContext();
+  useEffect(() => {
+    commit({ type: "FETCH" })
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/tentang-kami`)
+      .then(res => res.json())
+      .then(res => {
+        commit({ type: "SUCCESS", payload: { tentang_kami: res.data } })
+      })
+      .catch(err => {
+        commit({ type: "ERROR", payload: err })
+      })
+  }, [])
   return (
     <>
       <div className="container m-5 p-5">

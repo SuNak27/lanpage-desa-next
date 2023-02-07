@@ -1,10 +1,10 @@
 import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
-import { aparat } from "@/dummy/data"
+import { useAppContext } from "@/utils/context"
 
 export default function AparaturDesa() {
-  const dataJabatan = aparat
+  const { state } = useAppContext()
   return (
     <>
       <Header title="Aparatur Desa" />
@@ -22,12 +22,12 @@ export default function AparaturDesa() {
                 </tr>
               </thead>
               <tbody>
-                {dataJabatan.map((item, index) => (
+                {state.data?.tentang_kami?.desa_struktural.map((item, index) => (
                   <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>
                     <td>{item.nip}</td>
-                    <td>{item.nama}</td>
-                    <td>{item.jabatan}</td>
+                    <td>{item.nama_penduduk}</td>
+                    <td>{item.nama_jabatan}</td>
                   </tr>
                 ))}
               </tbody>
@@ -39,7 +39,7 @@ export default function AparaturDesa() {
   )
 }
 
-AparaturDesa.getLayout = function getLayout(page) {
+AparaturDesa.getLayout = function getLayout(page: React.ReactNode) {
   return (
     <Layout>
       <AboutLayout>

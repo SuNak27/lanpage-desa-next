@@ -1,8 +1,10 @@
 import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
+import { useAppContext } from "@/utils/context"
 
 export default function VisiMisi() {
+  const { state } = useAppContext()
   return (
     <>
       <Header title="Visi Misi" />
@@ -11,7 +13,7 @@ export default function VisiMisi() {
         <div className="row">
           <div className="col-lg-12">
             <p className="text-justify">
-              “Terwujudnya Desa Karanganyar yang sejahtera, mandiri, dan berdaya saing”
+              {state.data?.tentang_kami?.visi}
             </p>
           </div>
         </div>
@@ -19,15 +21,7 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Misi</h4>
         <div className="row">
           <div className="col-lg-12">
-            <p className="text-justify">
-              1. Meningkatkan kesejahteraan masyarakat melalui pemberdayaan masyarakat dan pembangunan ekonomi desa yang berkelanjutan.
-            </p>
-            <p className="text-justify">
-              2. Meningkatkan kualitas pelayanan publik yang efektif, efisien, dan transparan.
-            </p>
-            <p className="text-justify">
-              3. Meningkatkan kualitas pemerintahan yang bersih, akuntabel, dan berwawasan lingkungan.
-            </p>
+            {state.data?.tentang_kami?.misi}
           </div>
         </div>
       </div>
@@ -35,7 +29,7 @@ export default function VisiMisi() {
   )
 }
 
-VisiMisi.getLayout = function getLayout(page) {
+VisiMisi.getLayout = function getLayout(page: React.ReactNode) {
   return (
     <Layout>
       <AboutLayout>
