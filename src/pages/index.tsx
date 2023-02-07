@@ -3,8 +3,12 @@ import { aparat, berita_baru, faq, layanan } from "@/dummy/data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import Header from "@/layout/header";
+import { useContext } from "react";
+import { Context } from "@/utils/context";
+import parse from 'html-react-parser';
 
 export default function Home() {
+  const { desa, masterData } = useContext(Context);
   const data = berita_baru;
   const dataLayanan = layanan;
   const aparatur = aparat;
@@ -27,7 +31,7 @@ export default function Home() {
                 <div
                   className="card-body"
                   style={{
-                    minHeight: "300px",
+                    maxHeight: "300px",
                   }}
                 >
                   <h5 className="card-title mb-3 py-3">Berita Terbaru</h5>
@@ -43,20 +47,18 @@ export default function Home() {
                     }}
                     className="news-swiper"
                   >
-                    {data?.map((item, index) => (
+                    {desa?.artikel?.map((item, index) => (
                       <SwiperSlide key={index} className="mb-5">
-                        <div className="card">
-                          <div className="card-body row">
-                            <div className="col-3">{image(item.image)}</div>
-                            <div className="col-9">
-                              <h5 className="card-title">{item.title}</h5>
-                              <p className="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem nisi facere sapiente earum rerum harum praesentium atque, labore dolore non ab saepe quas. Ea hic ullam tempore porro eum obcaecati, exercitationem esse totam nemo sunt quidem quia ut? Aperiam consequatur illum iure natus, perspiciatis aliquid ab provident. Cum odio iusto quis, rem aperiam maiores perspiciatis, delectus architecto alias debitis adipisci, doloribus repellendus distinctio dolorum. Facilis, quis expedita esse nisi recusandae odio consequatur explicabo earum harum! Eos voluptate veritatis, perspiciatis, impedit consequatur distinctio fugit consectetur autem tenetur quia praesentium asperiores rem sunt unde quae porro adipisci vero inventore labore aperiam commodi.
-                              </p>
-                              <a href="#" className="btn btn-primary">
-                                Selengkapnya
-                              </a>
-                            </div>
+                        <div className="card-body row">
+                          <div className="col-3">{image(item.gambar ?? '')}</div>
+                          <div className="col-9">
+                            <h5 className="card-title">{item.judul}</h5>
+                            <p className="card-text">
+                              {item.isi.substring(0, 400)}...
+                            </p>
+                            <a href="#" className="btn btn-primary">
+                              Selengkapnya
+                            </a>
                           </div>
                         </div>
                       </SwiperSlide>
@@ -105,7 +107,7 @@ export default function Home() {
               },
             }}
           >
-            {dataLayanan?.map((item, index) => (
+            {desa?.layanan.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="p-3 card-layanan">
                   <i
@@ -172,24 +174,24 @@ export default function Home() {
               },
             }}
           >
-            {aparatur?.map((item, index) => (
+            {desa?.desa_struktural?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="text-center text-white">
                   <div
                     className="octagon mx-auto mb-3 d-flex bg-success"
                     style={{ width: 200, height: 200 }}
                   >
-                    <img width={300} height={300} alt="foto" src={item.image} />
+                    {/* <img width={300} height={300} alt="foto" src={item.} /> */}
                   </div>
                   <div className="mb-0">
                     <a
                       href="#"
                       className="text-white text-decoration-none fw-bold text-hover-primary fs-5"
                     >
-                      {item.nama}
+                      {item.nama_penduduk}
                     </a>
                     <div className="text-muted fs-6 fw-semibold mt-1">
-                      {item.jabatan}
+                      {item.nama_jabatan}
                     </div>
                   </div>
                 </div>
@@ -247,7 +249,7 @@ export default function Home() {
             </div>
             <div className="col-lg-8">
               <div className="accordion" id="accordionPanelsStayOpenExample">
-                {faqs?.map((item, index) => (
+                {desa?.faq?.map((item, index) => (
                   <div className="accordion-item" key={index}>
                     <h2 className="accordion-header" id={'faq_' + index}>
                       <button className={`accordion-button ${index != 0 ? 'collapsed' : ''}`} type="button" data-bs-toggle="collapse" data-bs-target={`#item_${index}`} aria-expanded={index == 0} aria-controls={`item_${index}`}>
@@ -269,7 +271,9 @@ export default function Home() {
 
       <section className="map">
         <div className="p-0 m-0">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.7499959945194!2d113.4958403143558!3d-7.709953678511709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd703f599489a1b%3A0xf34d3ceb3f9ddf2c!2sUniversitas%20Nurul%20Jadid!5e0!3m2!1sid!2sid!4v1675631267104!5m2!1sid!2sid" width="100%" height="450" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+          {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.7499959945194!2d113.4958403143558!3d-7.709953678511709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd703f599489a1b%3A0xf34d3ceb3f9ddf2c!2sUniversitas%20Nurul%20Jadid!5e0!3m2!1sid!2sid!4v1675631267104!5m2!1sid!2sid" width="100%" height="450" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe> */}
+
+          {parse(masterData?.map_desa || '')}
         </div>
       </section>
     </>

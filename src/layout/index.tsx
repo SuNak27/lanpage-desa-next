@@ -1,4 +1,4 @@
-import { ContextProvider, useAppContext } from "@/utils/context"
+import { Context } from "@/utils/context"
 import { useEffect, useState } from "react"
 import Hero from "./hero"
 import Navbar from "./navbar"
@@ -7,27 +7,48 @@ import Header from "./header"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [title, setTitle] = useState("Beranda")
-  const { state, commit } = useAppContext();
+  const [masterData, setMasterData] = useState(null)
+  const [desa, setDesa] = useState(null)
 
   useEffect(() => {
-    commit({ type: "FETCH" })
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/info-desa`)
+      .then(res => res.json())
+      .then(res => {
+        setMasterData(res.data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/desa`)
       .then(res => res.json())
       .then(res => {
-        commit({ type: "SUCCESS", payload: { info_desa: res.data } })
+        setDesa(res.data)
       })
       .catch(err => {
-        commit({ type: "ERROR", payload: err })
+        console.error(err)
       })
   }, [])
 
+  const value = {
+    title,
+    setTitle,
+    masterData,
+    setMasterData,
+    desa,
+    setDesa,
+  }
+
+  console.log(value);
+
+
   return (
-    <ContextProvider>
+    <Context.Provider value={value}>
       <Header title={title} />
       <Navbar />
       <Hero />
       <main>{children}</main>
       <Footer />
-    </ContextProvider>
+    </Context.Provider>
   )
 }

@@ -69,3 +69,25 @@ export interface InfoDesa {
   artikel: Artikel[],
   desa_struktural: DesaStruktural[],
 }
+
+export interface MasterData {
+  id_desa: string,
+  nama_kepala_desa: string,
+  kode_pos: string,
+  alamat_kantor_desa: string,
+  visi: string,
+  misi: string,
+  telepon: string,
+  email: string,
+  website: string,
+  logo: string,
+  map_desa: string,
+  batas_utara: null | string,
+  batas_selatan: null | string,
+  batas_barat: null | string,
+  batas_timur: null | string,
+  nama_desa: string,
+  nama_kecamatan: string,
+  nama_kabupaten: string,
+  nama_provinsi: string
+}
