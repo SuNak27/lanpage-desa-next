@@ -22,12 +22,13 @@ export default function Hero() {
   const [breadcrumbs, setBreadcrumbs] = useState<PathArray>();
   useEffect(() => {
     if (router) {
-      const linkPath = router.asPath.split('/');
+      const linkPath = router.pathname.split('/');
       linkPath.shift();
 
       const pathArray: PathArray = linkPath.map((path, i) => {
+
         return {
-          breadcrumb: path,
+          breadcrumb: path.includes("[") ? title : path,
           href: "/" + linkPath.slice(0, i + 1).join("/"),
         };
       });
