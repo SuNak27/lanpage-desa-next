@@ -1,21 +1,21 @@
 import Layout from "@/layout"
 import Header from "@/layout/header"
 import StatistikLayout from "@/layout/statistik"
-import { StatistikContext } from "@/utils/context"
+import { ContextProvider, useAppContext } from "@/utils/context"
 import { useContext } from "react"
 import { Pie } from "react-chartjs-2"
 
 export default function Statistik() {
-  const data = useContext(StatistikContext)
+  const { state } = useAppContext()
 
   // Dummy Data
   const chartData = {
-    labels: data?.agama.data.map((agama) => {
+    labels: state.data?.statistik?.agama.data.map((agama) => {
       return `${agama.agama}`
     }),
     datasets: [
       {
-        data: data?.agama.data.map((agama) => agama.jumlah_penduduk),
+        data: state.data?.statistik?.agama.data.map((agama) => agama.jumlah_penduduk),
         label: "Jumlah Penduduk",
         backgroundColor: [
           "#FF6384",
@@ -60,7 +60,7 @@ export default function Statistik() {
                 </tr>
               </thead>
               <tbody>
-                {data?.agama.data.map((agama, index) => (
+                {state.data?.statistik?.agama.data.map((agama, index) => (
                   <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>
                     <td>
@@ -108,10 +108,12 @@ export default function Statistik() {
 
 Statistik.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <Layout>
-      <StatistikLayout>
-        {page}
-      </StatistikLayout>
-    </Layout>
+    <ContextProvider>
+      <Layout>
+        <StatistikLayout>
+          {page}
+        </StatistikLayout>
+      </Layout>
+    </ContextProvider>
   )
 }

@@ -1,19 +1,27 @@
 import ActiveLink from "@/component/ActiveLink";
-import { AboutContext } from "@/utils/context";
-import { TentangKami } from "@/utils/dataInterface";
+import { ContextProvider, useAppContext } from "@/utils/context";
 // import { useAppContext } from "@/utils/context";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {
-  const [data, setData] = useState(null)
+  const { commit } = useAppContext();
   useEffect(() => {
+    commit({ type: "FETCH" })
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/tentang-kami`)
       .then(res => res.json())
       .then(res => {
-        setData(res.data)
+        commit({
+          type: "SUCCESS",
+          payload: {
+            tentang_kami: res.data
+          }
+        })
       })
       .catch(err => {
-        console.error(err)
+        commit({
+          type: "ERROR",
+          payload: err.message
+        })
       })
   }, [])
   return (
@@ -39,9 +47,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
           <div className="col-lg-9">
             <div className="row">
               <div className="col-lg-12">
-                <AboutContext.Provider value={data}>
-                  {children}
-                </AboutContext.Provider>
+                {children}
               </div>
             </div>
           </div>

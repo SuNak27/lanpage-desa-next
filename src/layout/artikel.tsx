@@ -1,30 +1,36 @@
 import ActiveLink from "@/component/ActiveLink";
-import { ArtikelContext, Context } from "@/utils/context";
+import { useAppContext } from "@/utils/context";
 import { Artikel } from "@/utils/dataInterface";
-import { useContext, useEffect, useState } from "react";
-
-type Kategori = {
-  id_kategori: number;
-  nama_kategori: string;
-  slug: string;
-  artikel: Artikel[]
-}
+import { useEffect } from "react";
 
 export default function ArtikelLayout({ children }: { children: React.ReactNode }) {
-  const [data, setData] = useState(null)
-  const [kategori, setKategori] = useState<Kategori[]>([])
-  const { desa } = useContext(Context)
-
+  const { state, commit } = useAppContext();
   useEffect(() => {
+    if (state.data?.artikel || state.data?.kategori) {
+      return
+    };
+
+    commit({ type: "FETCH" });
     Promise.all([
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/artikel`),
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/kategori?limit=10&page=1`),
     ])
       .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
       .then(([res1, res2]) => {
-        setData(res1.data)
-        setKategori(res2.data)
+        commit({
+          type: "SUCCESS",
+          payload: {
+            artikel: res1.data,
+            kategori: res2.data,
+          },
+        });
       })
+      .catch((err) => {
+        commit({
+          type: "ERROR",
+          payload: err.message,
+        });
+      });
   }, [])
 
   function badge(props: number) {
@@ -56,9 +62,7 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
       <div className="container my-5">
         <div className="row">
           <div className="col-md-8">
-            <ArtikelContext.Provider value={data}>
-              {children}
-            </ArtikelContext.Provider>
+            {children}
           </div>
           <div className="col-md-4">
             <div className="position-sticky" style={{ top: '6em' }}>
@@ -72,7 +76,7 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
               <div className="mt-4">
                 <h3 className="fw-bolder my-4">Berita Terbaru</h3>
 
-                {desa?.artikel?.map((item, index) => (
+                {state.data?.artikel?.map((item, index) => (
                   <div className="d-flex my-3" key={index}>
                     <div style={{ width: '30%' }}>
                       {image(item.gambar ?? '')}
@@ -101,12 +105,12 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
                 <ul className="list-group list-group-flush list-kategori">
                   <button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">
                     Semua
-                    <span className="badge bg-primary rounded-pill">{desa?.artikel?.length}</span>
+                    <span className="badge bg-primary rounded-pill">{state.data?.artikel?.length}</span>
                   </button>
-                  {kategori.map((item, index) => (
+                  {state.data?.kategori?.map((item, index) => (
                     <ActiveLink className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" key={index} activeClassName={"active"} href={`/kategori/${item.slug}`}>
                       {item.nama_kategori}
-                      {badge(item.artikel.length)}
+                      {badge(item.artikel?.length ?? 0)}
                     </ActiveLink>
                   ))}
                 </ul>

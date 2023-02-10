@@ -9,7 +9,6 @@ import parse from 'html-react-parser'
 
 export default function Home() {
   const { state, commit } = useAppContext();
-  
   function image(image: string) {
     if (image !== "") {
       return (
@@ -27,9 +26,36 @@ export default function Home() {
           height: '150px'
         }} />
       );
-
     }
   }
+
+  useEffect(() => {
+    if (state.data?.info_desa || state.data?.master_data) {
+      return
+    };
+    commit({ type: "FETCH" });
+    Promise.all([
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/desa`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/info-desa`)
+    ])
+      .then(([info_desa, masterData]) => Promise.all([info_desa.json(), masterData.json()]))
+      .then(([info_desa, masterData]) => {
+        commit({
+          type: "SUCCESS",
+          payload: {
+            info_desa: info_desa.data,
+            master_data: masterData.data
+          }
+        })
+      })
+      .catch(err => {
+        commit({
+          type: "ERROR",
+          payload: err.message
+        })
+      })
+  }, []);
+
   return (
     <>
       <Header title={'Beranda'}></Header>
@@ -57,7 +83,7 @@ export default function Home() {
                     }}
                     className="news-swiper"
                   >
-                    {desa?.artikel?.map((item, index) => (
+                    {state.data?.info_desa?.artikel?.map((item, index) => (
                       <SwiperSlide key={index} className="mb-5">
                         <div className="card-body row">
                           <div className="col-3">{image(item.gambar ?? '')}</div>
@@ -118,7 +144,7 @@ export default function Home() {
               },
             }}
           >
-            {desa?.layanan?.map((item, index) => (
+            {state.data?.info_desa?.layanan?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="p-3 card-layanan">
                   <i
@@ -185,7 +211,7 @@ export default function Home() {
               },
             }}
           >
-            {desa?.desa_struktural?.map((item, index) => (
+            {state.data?.info_desa?.desa_struktural?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="text-center text-white">
                   <div
@@ -260,7 +286,7 @@ export default function Home() {
             </div>
             <div className="col-lg-8">
               <div className="accordion" id="accordionPanelsStayOpenExample">
-                {desa?.faq?.map((item, index) => (
+                {state.data?.info_desa?.faq?.map((item, index) => (
                   <div className="accordion-item" key={index}>
                     <h2 className="accordion-header" id={'faq_' + index}>
                       <button className={`accordion-button ${index != 0 ? 'collapsed' : ''}`} type="button" data-bs-toggle="collapse" data-bs-target={`#item_${index}`} aria-expanded={index == 0} aria-controls={`item_${index}`}>

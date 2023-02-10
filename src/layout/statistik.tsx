@@ -1,17 +1,26 @@
 import ActiveLink from "@/component/ActiveLink";
-import { StatistikContext } from "@/utils/context";
+import { useAppContext } from "@/utils/context";
 import { useEffect, useState } from "react";
 
 export default function StatistikLayout({ children }: { children: React.ReactNode }) {
-  const [data, setData] = useState(null)
+  const { state, commit } = useAppContext()
   useEffect(() => {
+    commit({ type: "FETCH" })
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/statistik`)
       .then(res => res.json())
       .then(res => {
-        setData(res.data)
+        commit({
+          type: "SUCCESS",
+          payload: {
+            statistik: res.data
+          }
+        })
       })
       .catch(err => {
-        console.error(err)
+        commit({
+          type: "ERROR",
+          payload: err.message
+        })
       })
   }, [])
   return (
@@ -38,9 +47,7 @@ export default function StatistikLayout({ children }: { children: React.ReactNod
           <div className="col-lg-9">
             <div className="row">
               <div className="col-lg-12">
-                <StatistikContext.Provider value={data}>
-                  {children}
-                </StatistikContext.Provider>
+                {children}
               </div>
             </div>
           </div>

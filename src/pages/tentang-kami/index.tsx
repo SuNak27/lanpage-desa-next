@@ -1,11 +1,10 @@
 import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
-import { AboutContext } from "@/utils/context"
-import { useContext, useEffect } from "react"
+import { ContextProvider, useAppContext } from "@/utils/context"
 
 export default function About() {
-  const data = useContext(AboutContext)
+  const { state } = useAppContext()
   return (
     <>
       <Header title="Tentang Kami" />
@@ -14,7 +13,7 @@ export default function About() {
         <div className="row">
           <div className="col-lg-12">
             <p>
-              {data?.profil_desa}
+              {state.data?.tentang_kami?.profil_desa}
             </p>
           </div>
         </div>
@@ -25,10 +24,12 @@ export default function About() {
 
 About.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <Layout>
-      <AboutLayout>
-        {page}
-      </AboutLayout>
-    </Layout>
+    <ContextProvider>
+      <Layout>
+        <AboutLayout>
+          {page}
+        </AboutLayout>
+      </Layout>
+    </ContextProvider>
   )
 }

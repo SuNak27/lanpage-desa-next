@@ -28,6 +28,13 @@ type Faq = {
   jawaban: string,
 }
 
+type Kategori = {
+  id_kategori: number,
+  nama_kategori: string,
+  slug: string,
+  artikel?: Artikel[],
+}
+
 export type Artikel = {
   id_artikel: number,
   id_kategori: number,
@@ -43,32 +50,13 @@ export type Artikel = {
   slug_kategori?: string,
 }
 
-type MasterData = {
-  id_desa: string,
-  nama_kepala_desa: string,
-  kode_pos: string,
-  alamat_kantor_desa: string,
-  visi: string,
-  misi: string,
-  telepon: string,
-  email: string,
-  website: string,
-  logo: string,
-  map_desa: string,
-  batas_utara: null | string,
-  batas_selatan: null | string,
-  batas_barat: null | string,
-  batas_timur: null | string,
-  nama_desa: string,
-  nama_kecamatan: string,
-  nama_kabupaten: string,
-  nama_provinsi: string
-}
-
 export interface Data {
   tentang_kami?: TentangKami;
   info_desa?: InfoDesa,
   master_data?: MasterData,
+  statistik?: Statistik,
+  artikel?: Artikel[],
+  kategori?: Kategori[],
 }
 
 

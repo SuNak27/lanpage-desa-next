@@ -18,7 +18,7 @@ export default function Hero() {
     "/assets/images/2.jpg",
   ];
   const router = useRouter();
-  const { title, desa } = useContext(Context);
+  const { state } = useContext(Context);
   const [breadcrumbs, setBreadcrumbs] = useState<PathArray>();
   useEffect(() => {
     if (router) {
@@ -28,7 +28,7 @@ export default function Hero() {
       const pathArray: PathArray = linkPath.map((path, i) => {
 
         return {
-          breadcrumb: path.includes("[") ? title : path,
+          breadcrumb: path.includes("[") ? state.title : path,
           href: "/" + linkPath.slice(0, i + 1).join("/"),
         };
       });
@@ -79,7 +79,7 @@ export default function Hero() {
                   <div className="container">
                     <h1 className="fw-bold">Sistem Informasi Desa</h1>
                     <h5 className="hero-text mb-3">
-                      {desa?.nama_desa}, {desa?.nama_kecamatan}, {desa?.nama_kabupaten}
+                      {state.data?.master_data?.nama_desa}, {state.data?.master_data?.nama_kecamatan}, {state.data?.master_data?.nama_kabupaten}
                     </h5>
                     <a href="#" className="btn btn-primary">
                       Selengkapnya
@@ -111,7 +111,7 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Penduduk</h5>
-                              <p className="card-text">{desa?.jumlah_penduduk}</p>
+                              <p className="card-text">{state.data?.info_desa?.jumlah_penduduk}</p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -119,7 +119,7 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Keluarga</h5>
-                              <p className="card-text">{desa?.jumlah_keluarga}</p>
+                              <p className="card-text">{state.data?.info_desa?.jumlah_keluarga}</p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -127,7 +127,7 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Rumah Tangga</h5>
-                              <p className="card-text">{desa?.jumlah_rumah_tangga}</p>
+                              <p className="card-text">{state.data?.info_desa?.jumlah_rumah_tangga}</p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -135,7 +135,7 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Dusun</h5>
-                              <p className="card-text">{desa?.jumlah_dusun}</p>
+                              <p className="card-text">{state.data?.info_desa?.jumlah_dusun}</p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -176,7 +176,7 @@ export default function Hero() {
                 <div className="hero-caption position-relative">
                   <div className="container">
                     <h3 className="fw-bold mt-5">
-                      {title ? title : "Sistem Informasi Desa"}
+                      {state.title ? state.title : "Sistem Informasi Desa"}
                     </h3>
                     <nav aria-label="breadcrumb">
                       <ol className="breadcrumb">

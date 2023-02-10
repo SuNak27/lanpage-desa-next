@@ -1,14 +1,16 @@
 import { createContext, useContext, useReducer } from "react";
-import { createContext } from "react";
-import { Artikel, InfoDesa, MasterData, Statistik, TentangKami, Data } from "./dataInterface";
+import { InfoDesa, MasterData, Data } from "./dataInterface";
+
+type State = {
+  tag: "idle" | "loading" | "success" | "error" | "empty";
+  title: string;
+  data: Data | null;
+  errorMessage: string;
+}
 
 type ContextType = {
-  title: string;
-  setTitle: (title: string) => void;
-  masterData: MasterData | null;
-  setMasterData: (masterData: any) => void;
-  desa: InfoDesa | null;
-  setDesa: (desa: any) => void;
+  state: State;
+  commit: React.Dispatch<Action>;
 };
 
 type Action =
@@ -19,7 +21,13 @@ type Action =
   | { type: "EMPTY" };
 
 export const Context = createContext<ContextType>({
-  setDesa: () => { },
+  state: {
+    tag: "idle",
+    title: "Beranda",
+    data: null,
+    errorMessage: "",
+  },
+  commit() { },
 });
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -54,10 +62,19 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
       case "loading": {
         switch (action.type) {
           case "SUCCESS": {
+            console.log(action.payload, "action.payload");
+            // Merge data payload with state data
+            const prevState = state.data;
+            const newState = action.payload;
+            const mergedData = {
+              ...prevState,
+              ...newState,
+            };
+
             return {
               ...state,
               tag: "success",
-              data: action.payload,
+              data: mergedData,
             };
           }
           case "EMPTY": {
@@ -80,6 +97,8 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
       case "success": {
         switch (action.type) {
           case "FETCH": {
+            console.log("fetch");
+
             return {
               ...state,
               tag: "loading",

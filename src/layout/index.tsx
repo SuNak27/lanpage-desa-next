@@ -1,12 +1,12 @@
 import { useAppContext } from "@/utils/context"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Hero from "./hero"
 import Navbar from "./navbar"
 import Footer from "./footer"
 import Header from "./header"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { state, commit } = useAppContext()
+  const { commit } = useAppContext()
 
   useEffect(() => {
     commit({ type: "FETCH" })
@@ -25,10 +25,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         })
       })
       .catch(err => {
-        console.error(err)
+        commit({
+          type: "ERROR",
+          payload: err.message
+        })
       })
   }, [])
-  
+
   return (
     <>
       <Header />

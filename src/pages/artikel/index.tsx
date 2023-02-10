@@ -1,18 +1,18 @@
 import Layout from "@/layout"
 import ArtikelLayout from "@/layout/artikel"
 import Header from "@/layout/header"
-import { ArtikelContext } from "@/utils/context"
-import { useContext } from "react"
+import StatistikLayout from "@/layout/statistik";
+import { ContextProvider, useAppContext } from "@/utils/context"
 import parse from 'html-react-parser';
 
 export default function Artikel() {
-  const data = useContext(ArtikelContext)
+  const { state } = useAppContext()
   return (
     <>
       <Header title="Artikel" />
       <div className="p-4 rounded-3">
         <div className="row g-4 overflow-hidden mb-5">
-          {data?.map((item, index) => (
+          {state.data?.artikel?.map((item, index) => (
             <div className="col-12" key={index}>
               <div className="card overflow-hidden w-100 shadow border-0">
                 <div className="row g-0">
@@ -55,10 +55,12 @@ export default function Artikel() {
 
 Artikel.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <Layout>
-      <ArtikelLayout>
-        {page}
-      </ArtikelLayout>
-    </Layout>
+    <ContextProvider>
+      <Layout>
+        <ArtikelLayout>
+          {page}
+        </ArtikelLayout>
+      </Layout>
+    </ContextProvider>
   )
 }
