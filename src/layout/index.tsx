@@ -39,8 +39,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setDesa,
   }
 
-  console.log(value);
-
 
   return (
     <Context.Provider value={value}>

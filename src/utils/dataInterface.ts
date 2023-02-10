@@ -28,7 +28,7 @@ type Faq = {
   jawaban: string,
 }
 
-type Artikel = {
+export type Artikel = {
   id_artikel: number,
   id_kategori: number,
   id_desa: number,
@@ -39,6 +39,8 @@ type Artikel = {
   created_at: string,
   updated_at: string,
   deleted_at: string | null,
+  nama_kategori?: string,
+  slug_kategori?: string,
 }
 
 export interface Data {

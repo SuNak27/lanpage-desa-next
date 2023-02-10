@@ -49,7 +49,7 @@ export default function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto gap-lg-3">
+          <ul className="navbar-nav ms-auto gap-lg-2">
             <li className="nav-item">
               <ActiveLink activeClassName="active" className="nav-link" href="/">
                 Beranda
@@ -93,6 +93,11 @@ export default function Navbar() {
                   </ActiveLink>
                 </li>
               </ul>
+            </li>
+            <li className="nav-item">
+              <ActiveLink activeClassName="active" className="nav-link" href="/artikel">
+                Artikel
+              </ActiveLink>
             </li>
           </ul>
         </div>

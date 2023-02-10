@@ -9,15 +9,24 @@ import parse from 'html-react-parser';
 
 export default function Home() {
   const { desa, masterData } = useContext(Context);
-  const data = berita_baru;
-  const dataLayanan = layanan;
-  const aparatur = aparat;
-  const faqs = faq;
   function image(image: string) {
     if (image !== "") {
       return (
-        <img alt="image" width={300} height={300} src={image ?? ''} className="d-block h-100 w-100 img-news rounded-4" />
+        <img alt="image" src={process.env.NEXT_PUBLIC_IMAGE_URL + image ?? ''} className="img-news rounded-4" style={{
+          objectFit: 'cover',
+          width: '100%',
+          height: '150px'
+        }} />
       );
+    } else {
+      return (
+        <img alt="image" width={300} height={150} src={'/assets/images/no-image.png'} className="img-news rounded-4" style={{
+          objectFit: 'cover',
+          width: '100%',
+          height: '150px'
+        }} />
+      );
+
     }
   }
   return (
@@ -54,7 +63,8 @@ export default function Home() {
                           <div className="col-9">
                             <h5 className="card-title">{item.judul}</h5>
                             <p className="card-text">
-                              {item.isi.substring(0, 400)}...
+                              {/* {item.isi.substring(0, 400)}... */}
+                              {parse(item.isi.substring(0, 400))}
                             </p>
                             <a href="#" className="btn btn-primary">
                               Selengkapnya
@@ -107,7 +117,7 @@ export default function Home() {
               },
             }}
           >
-            {desa?.layanan.map((item, index) => (
+            {desa?.layanan?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="p-3 card-layanan">
                   <i
@@ -271,8 +281,6 @@ export default function Home() {
 
       <section className="map">
         <div className="p-0 m-0">
-          {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.7499959945194!2d113.4958403143558!3d-7.709953678511709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd703f599489a1b%3A0xf34d3ceb3f9ddf2c!2sUniversitas%20Nurul%20Jadid!5e0!3m2!1sid!2sid!4v1675631267104!5m2!1sid!2sid" width="100%" height="450" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe> */}
-
           {parse(masterData?.map_desa || '')}
         </div>
       </section>
