@@ -71,11 +71,6 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
               ...prevState,
               ...newState,
             };
-
-            console.log(state.data);
-            // console.log(mergedData);
-
-
             return {
               ...state,
               tag: "success",
