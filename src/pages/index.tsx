@@ -85,16 +85,16 @@ export default function Home() {
                   >
                     {state.data?.info_desa?.artikel?.map((item, index) => (
                       <SwiperSlide key={index} className="mb-5">
-                        <div className="card-body row">
+                        <div className="card-body row mb-4">
                           <div className="col-3">{image(item.gambar ?? '')}</div>
                           <div className="col-9">
                             <h5 className="card-title">{item.judul}</h5>
-                            <span className="card-text">
+                            <div className="card-text">
                               {/* {item.isi.substring(0, 400)}... */}
                               {parse(item.isi.substring(0, 400))}
-                            </span>
-                            <a href="#" className="btn btn-primary">
-                              Selengkapnya
+                            </div>
+                            <a href="#" className="text-decoration-none">
+                              Selengkapnya <i className="bi bi-arrow-right"></i>
                             </a>
                           </div>
                         </div>

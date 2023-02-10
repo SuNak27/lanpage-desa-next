@@ -37,11 +37,14 @@ export default function Artikel() {
                     <h5 className="card-title fw-semibold truncate mt-3">
                       <a href="" className="text-decoration-none text-dark">{item.judul}</a>
                     </h5>
-                    <span className="card-text truncate-2">
+                    <div className="card-text truncate-2">
                       {/* {parse(item.isi)} */}
                       {parse(item.isi.substring(0, 150))}
-                    </span>
-                    <a href="/berita/" className="text-decoration-none fw-semibold">Baca selengkapnya</a>
+                    </div>
+                    <a href="/berita/" className="text-decoration-none fw-semibold">
+                      Baca selengkapnya
+                      <i className="bi bi-arrow-right ms-1"></i>
+                    </a>
                   </div>
                 </div>
               </div>
