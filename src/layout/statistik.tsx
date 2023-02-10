@@ -1,28 +1,41 @@
 import ActiveLink from "@/component/ActiveLink";
+import { api } from "@/utils/apiService";
 import { useAppContext } from "@/utils/context";
 import { useEffect, useState } from "react";
 
 export default function StatistikLayout({ children }: { children: React.ReactNode }) {
   const { state, commit } = useAppContext()
   useEffect(() => {
+    if (state.data?.statistik) {
+      return
+    }
+
     commit({ type: "FETCH" })
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/statistik`)
-      .then(res => res.json())
-      .then(res => {
-        commit({
-          type: "SUCCESS",
-          payload: {
-            statistik: res.data
-          }
-        })
-      })
-      .catch(err => {
-        commit({
-          type: "ERROR",
-          payload: err.message
-        })
-      })
-  }, [])
+    switch (state.tag) {
+      case "idle":
+        commit({ type: "FETCH" })
+        break
+      case "loading":
+        api.get("/statistik")
+          .then((res) => {
+            commit({
+              type: "SUCCESS",
+              payload: {
+                statistik: res.data
+              }
+            })
+          })
+          .catch((err) => {
+            commit({
+              type: "ERROR",
+              payload: err.message
+            })
+          })
+        break
+      default:
+        break
+    }
+  }, [state.tag])
   return (
     <>
       <div className="container m-5 p-5">

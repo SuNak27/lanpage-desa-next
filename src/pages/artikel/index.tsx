@@ -1,7 +1,6 @@
 import Layout from "@/layout"
 import ArtikelLayout from "@/layout/artikel"
 import Header from "@/layout/header"
-import StatistikLayout from "@/layout/statistik";
 import { ContextProvider, useAppContext } from "@/utils/context"
 import parse from 'html-react-parser';
 

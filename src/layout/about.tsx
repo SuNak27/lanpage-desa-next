@@ -1,29 +1,43 @@
 import ActiveLink from "@/component/ActiveLink";
+import { api } from "@/utils/apiService";
 import { ContextProvider, useAppContext } from "@/utils/context";
 // import { useAppContext } from "@/utils/context";
 import { useEffect } from "react";
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {
-  const { commit } = useAppContext();
+  const { commit, state } = useAppContext();
   useEffect(() => {
-    commit({ type: "FETCH" })
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/tentang-kami`)
-      .then(res => res.json())
-      .then(res => {
-        commit({
-          type: "SUCCESS",
-          payload: {
-            tentang_kami: res.data
-          }
-        })
-      })
-      .catch(err => {
-        commit({
-          type: "ERROR",
-          payload: err.message
-        })
-      })
-  }, [])
+    if (state.data?.tentang_kami) {
+      return;
+    }
+
+    commit({ type: "FETCH" });
+    switch (state.tag) {
+      case "idle":
+        commit({ type: "FETCH" });
+        break;
+      case "loading":
+        api.get("/tentang-kami")
+          .then((res) => {
+            commit({
+              type: "SUCCESS",
+              payload: {
+                tentang_kami: res.data,
+              },
+            });
+          })
+          .catch((err) => {
+            commit({
+              type: "ERROR",
+              payload: err.message,
+            });
+          });
+        break;
+      default:
+        break;
+    }
+
+  }, [state.tag])
   return (
     <>
       <div className="container m-5 p-5">

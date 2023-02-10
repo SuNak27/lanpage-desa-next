@@ -16,7 +16,7 @@ export default function Header(props: Props) {
   return (
     <Head>
       <title>
-        {state.title} | {process.env.NEXT_PUBLIC_APP_NAME}
+        {props.title} | {process.env.NEXT_PUBLIC_APP_NAME}
       </title>
       <meta name="description" content="Aplikasi Sistem Informasi Desa" />
       <link rel="icon" href="/assets/images/logo.png" />

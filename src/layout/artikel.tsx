@@ -1,6 +1,6 @@
 import ActiveLink from "@/component/ActiveLink";
+import { api } from "@/utils/apiService";
 import { useAppContext } from "@/utils/context";
-import { Artikel } from "@/utils/dataInterface";
 import { useEffect } from "react";
 
 export default function ArtikelLayout({ children }: { children: React.ReactNode }) {
@@ -9,29 +9,33 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
     if (state.data?.artikel || state.data?.kategori) {
       return
     };
-
     commit({ type: "FETCH" });
-    Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/artikel`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/kategori?limit=10&page=1`),
-    ])
-      .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-      .then(([res1, res2]) => {
-        commit({
-          type: "SUCCESS",
-          payload: {
-            artikel: res1.data,
-            kategori: res2.data,
-          },
-        });
-      })
-      .catch((err) => {
-        commit({
-          type: "ERROR",
-          payload: err.message,
-        });
-      });
-  }, [])
+    switch (state.tag) {
+      case "loading":
+        Promise.all([
+          api.get("/artikel"),
+          api.get("/kategori"),
+        ])
+          .then(([artikel, kategori]) => {
+            commit({
+              type: "SUCCESS",
+              payload: {
+                artikel: artikel.data,
+                kategori: kategori.data
+              }
+            })
+          })
+          .catch(([artikel, kategori]) => {
+            commit({
+              type: "ERROR",
+              payload: artikel.message
+            })
+          })
+        break;
+      default:
+        break;
+    }
+  }, [state.tag])
 
   function badge(props: number) {
     if (props > 0) {

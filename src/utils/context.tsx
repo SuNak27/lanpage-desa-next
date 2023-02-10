@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
+import { api } from "./apiService";
 import { InfoDesa, MasterData, Data } from "./dataInterface";
 
 type State = {
@@ -38,6 +39,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     errorMessage: "",
   };
 
+
   const reducer = (state: State, action: Action): State => {
     switch (state.tag) {
       case "idle": {
@@ -51,6 +53,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
           case "CHANGE_TITLE": {
             return {
               ...state,
+              tag: "success",
               title: action.payload,
             };
           }
@@ -62,14 +65,16 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
       case "loading": {
         switch (action.type) {
           case "SUCCESS": {
-            console.log(action.payload, "action.payload");
-            // Merge data payload with state data
             const prevState = state.data;
             const newState = action.payload;
             const mergedData = {
               ...prevState,
               ...newState,
             };
+
+            console.log(state.data);
+            // console.log(mergedData);
+
 
             return {
               ...state,
@@ -97,8 +102,6 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
       case "success": {
         switch (action.type) {
           case "FETCH": {
-            console.log("fetch");
-
             return {
               ...state,
               tag: "loading",
@@ -155,8 +158,8 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
     }
   };
 
-  const [state, commit] = useReducer(reducer, initialState);
 
+  const [state, commit] = useReducer(reducer, initialState);
   const contextValue = {
     state,
     commit,

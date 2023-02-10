@@ -1,11 +1,10 @@
 import Image from "next/image";
-import { aparat, berita_baru, faq, layanan } from "@/dummy/data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import Header from "@/layout/header";
-import { useEffect } from "react";
 import { useAppContext } from "@/utils/context";
 import parse from 'html-react-parser'
+import { useEffect } from "react";
 
 export default function Home() {
   const { state, commit } = useAppContext();
@@ -30,32 +29,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (state.data?.info_desa || state.data?.master_data) {
-      return
-    };
     commit({ type: "FETCH" });
-    Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/desa`),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/info-desa`)
-    ])
-      .then(([info_desa, masterData]) => Promise.all([info_desa.json(), masterData.json()]))
-      .then(([info_desa, masterData]) => {
-        commit({
-          type: "SUCCESS",
-          payload: {
-            info_desa: info_desa.data,
-            master_data: masterData.data
-          }
-        })
-      })
-      .catch(err => {
-        commit({
-          type: "ERROR",
-          payload: err.message
-        })
-      })
-  }, []);
-
+  }, [])
   return (
     <>
       <Header title={'Beranda'}></Header>
