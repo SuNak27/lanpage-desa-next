@@ -5,6 +5,7 @@ import Header from "@/layout/header";
 import { useAppContext } from "@/utils/context";
 import parse from 'html-react-parser'
 import { useEffect } from "react";
+import Skeleton from "react-loading-skeleton";
 
 export default function Home() {
   const { state, commit } = useAppContext();
@@ -29,7 +30,11 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if (state.data?.info_desa || state.data?.master_data) {
+      return
+    };
     commit({ type: "FETCH" });
+
   }, [])
   return (
     <>
@@ -58,6 +63,21 @@ export default function Home() {
                     }}
                     className="news-swiper"
                   >
+                    {state.tag === 'loading' && (
+                      <SwiperSlide className="mb-5">
+                        <div className="card-body row mb-4">
+                          <div className="col-3">
+                            <Skeleton width={250} height={150} />
+                          </div>
+                          <div className="col-9">
+                            <Skeleton width={250} height={20} className={'mb-3'} />
+                            <Skeleton width={'100%'} height={20} />
+                            <Skeleton width={'100%'} height={20} />
+                            <Skeleton width={'100%'} height={20} />
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    )}
                     {state.data?.info_desa?.artikel?.map((item, index) => (
                       <SwiperSlide key={index} className="mb-5">
                         <div className="card-body row mb-4">
@@ -119,6 +139,16 @@ export default function Home() {
               },
             }}
           >
+            {state.tag === 'loading' && (
+              [1, 2, 3].map((item) => (
+                <SwiperSlide key={item}>
+                  <div className="p-3 card-layanan">
+                    <Skeleton width={25} height={25} className={'mb-4'} inline />
+                    <Skeleton width={'100%'} height={20} count={3} />
+                  </div>
+                </SwiperSlide>
+              ))
+            )}
             {state.data?.info_desa?.layanan?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="p-3 card-layanan">
@@ -186,6 +216,18 @@ export default function Home() {
               },
             }}
           >
+            {state.tag === 'loading' && (
+              [1, 2].map((item) => (
+                <SwiperSlide key={item}>
+                  <div className="text-center text-white">
+                    <Skeleton width={200} height={200} circle className="mb-3" />
+
+                    <Skeleton width={'40%'} height={20} count={2} />
+                  </div>
+
+                </SwiperSlide>
+              ))
+            )}
             {state.data?.info_desa?.desa_struktural?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="text-center text-white">
@@ -261,6 +303,22 @@ export default function Home() {
             </div>
             <div className="col-lg-8">
               <div className="accordion" id="accordionPanelsStayOpenExample">
+                {state.tag === 'loading' && (
+                  [1, 2, 3, 4, 5].map((item) => (
+                    <div className="accordion-item" key={item}>
+                      <h2 className="accordion-header" id={'faq_' + item}>
+                        <button className={`accordion-button ${item != 0 ? 'collapsed' : ''}`} type="button" data-bs-toggle="collapse" data-bs-target={`#item_${item}`} aria-expanded={item == 0} aria-controls={`item_${item}`}>
+                          <Skeleton width={400} height={20} />
+                        </button>
+                      </h2>
+                      <div id={`item_${item}`} className={`accordion-collapse collapse ${item == 0 ? 'show' : ''}`} aria-labelledby={`item_${item}`}>
+                        <div className="accordion-body">
+                          <Skeleton width={'100%'} height={20} count={3} />
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
                 {state.data?.info_desa?.faq?.map((item, index) => (
                   <div className="accordion-item" key={index}>
                     <h2 className="accordion-header" id={'faq_' + index}>

@@ -3,8 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import { Context } from "@/utils/context";
+import { Context, useAppContext } from "@/utils/context";
 import ActiveLink from "@/component/ActiveLink";
+import Skeleton from "react-loading-skeleton";
 
 type PathArray = {
   breadcrumb: string;
@@ -18,7 +19,7 @@ export default function Hero() {
     "/assets/images/2.jpg",
   ];
   const router = useRouter();
-  const { state } = useContext(Context);
+  const { state } = useAppContext();
   const [breadcrumbs, setBreadcrumbs] = useState<PathArray>();
   useEffect(() => {
     if (router) {
@@ -78,9 +79,12 @@ export default function Hero() {
                 <div className="hero-caption position-relative">
                   <div className="container">
                     <h1 className="fw-bold">Sistem Informasi Desa</h1>
+
                     <h5 className="hero-text mb-3">
-                      {state.data?.master_data?.nama_desa}, {state.data?.master_data?.nama_kecamatan}, {state.data?.master_data?.nama_kabupaten}
+                      {state.tag == 'loading' ? 'Loading...' : state.data?.master_data?.nama_desa + ', ' + state.data?.master_data?.nama_kecamatan + ', ' + state.data?.master_data?.nama_kabupaten}
                     </h5>
+
+
                     <a href="#" className="btn btn-primary">
                       Selengkapnya
                     </a>
@@ -111,7 +115,13 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Penduduk</h5>
-                              <p className="card-text">{state.data?.info_desa?.jumlah_penduduk}</p>
+                              <p className="card-text">
+                                {state.tag == 'loading' && (
+                                  <Skeleton />
+                                )}
+                                {state.data?.info_desa?.jumlah_penduduk}
+
+                              </p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -119,7 +129,13 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Keluarga</h5>
-                              <p className="card-text">{state.data?.info_desa?.jumlah_keluarga}</p>
+                              <p className="card-text">
+                                {state.tag == 'loading' && (
+                                  <Skeleton />
+                                )}
+                                {state.data?.info_desa?.jumlah_keluarga}
+
+                              </p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -127,7 +143,12 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Rumah Tangga</h5>
-                              <p className="card-text">{state.data?.info_desa?.jumlah_rumah_tangga}</p>
+                              <p className="card-text">
+                                {state.tag == 'loading' && (
+                                  <Skeleton />
+                                )}
+                                {state.data?.info_desa?.jumlah_rumah_tangga}
+                              </p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -135,7 +156,12 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Dusun</h5>
-                              <p className="card-text">{state.data?.info_desa?.jumlah_dusun}</p>
+                              <p className="card-text">
+                                {state.tag == 'loading' && (
+                                  <Skeleton />
+                                )}
+                                {state.data?.info_desa?.jumlah_dusun}
+                              </p>
                             </div>
                           </div>
                         </SwiperSlide>

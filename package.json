@@ -22,6 +22,7 @@
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+    "react-loading-skeleton": "^3.1.0",
     "sass": "^1.58.0",
     "storybook-addon-next-router": "^4.0.2",
     "sweetalert2": "^11.7.1",
