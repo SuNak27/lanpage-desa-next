@@ -1,21 +1,14 @@
 import { createContext, useContext, useReducer } from "react";
-import { Data } from "./dataInterface";
+import { createContext } from "react";
+import { Artikel, InfoDesa, MasterData, Statistik, TentangKami, Data } from "./dataInterface";
 
 type ContextType = {
-  state: State;
-  commit: React.Dispatch<Action>;
-};
-
-type State = {
   title: string;
-  tag:
-  | "idle"
-  | "loading"
-  | "success"
-  | "empty"
-  | "error";
-  data: Data | null;
-  errorMessage: string;
+  setTitle: (title: string) => void;
+  masterData: MasterData | null;
+  setMasterData: (masterData: any) => void;
+  desa: InfoDesa | null;
+  setDesa: (desa: any) => void;
 };
 
 type Action =
@@ -26,13 +19,7 @@ type Action =
   | { type: "EMPTY" };
 
 export const Context = createContext<ContextType>({
-  state: {
-    title: "Beranda",
-    tag: "idle",
-    data: null,
-    errorMessage: "",
-  },
-  commit() { },
+  setDesa: () => { },
 });
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {

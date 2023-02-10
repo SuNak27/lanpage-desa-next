@@ -1,10 +1,11 @@
 import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
-import { useAppContext } from "@/utils/context"
+import { AboutContext } from "@/utils/context"
+import { useContext } from "react"
 
 export default function AparaturDesa() {
-  const { state } = useAppContext()
+  const data = useContext(AboutContext)
   return (
     <>
       <Header title="Aparatur Desa" />
@@ -22,7 +23,7 @@ export default function AparaturDesa() {
                 </tr>
               </thead>
               <tbody>
-                {state.data?.tentang_kami?.desa_struktural.map((item, index) => (
+                {data?.desa_struktural.map((item, index) => (
                   <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>
                     <td>{item.nip}</td>

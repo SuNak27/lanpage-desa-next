@@ -28,7 +28,7 @@ type Faq = {
   jawaban: string,
 }
 
-type Artikel = {
+export type Artikel = {
   id_artikel: number,
   id_kategori: number,
   id_desa: number,
@@ -39,6 +39,8 @@ type Artikel = {
   created_at: string,
   updated_at: string,
   deleted_at: string | null,
+  nama_kategori?: string,
+  slug_kategori?: string,
 }
 
 type MasterData = {
@@ -77,7 +79,6 @@ export interface TentangKami {
   desa_struktural: DesaStruktural[],
 }
 
-
 export interface InfoDesa {
   nama_desa: string,
   nama_kecamatan: string,
@@ -91,4 +92,61 @@ export interface InfoDesa {
   faq: Faq[],
   artikel: Artikel[],
   desa_struktural: DesaStruktural[],
+}
+
+export interface MasterData {
+  id_desa: string,
+  nama_kepala_desa: string,
+  kode_pos: string,
+  alamat_kantor_desa: string,
+  visi: string,
+  misi: string,
+  telepon: string,
+  email: string,
+  website: string,
+  logo: string,
+  map_desa: string,
+  batas_utara: null | string,
+  batas_selatan: null | string,
+  batas_barat: null | string,
+  batas_timur: null | string,
+  nama_desa: string,
+  nama_kecamatan: string,
+  nama_kabupaten: string,
+  nama_provinsi: string
+}
+
+type StatistikUmur = {
+  rentang_umur: string,
+  jumlah_penduduk: number,
+  persen_penduduk: string,
+  jumlah_penduduk_laki_laki: string,
+  jumlah_penduduk_perempuan: string,
+  persen_penduduk_laki_laki: string,
+  persen_penduduk_perempuan: string,
+}
+
+type StatistikAgama = {
+  agama: string,
+  jumlah_penduduk: number,
+  persen_penduduk: string,
+  jumlah_penduduk_laki_laki: string,
+  jumlah_penduduk_perempuan: string,
+  persen_penduduk_laki_laki: string,
+  persen_penduduk_perempuan: string,
+}
+
+export interface Statistik {
+  umur: {
+    data: StatistikUmur[],
+    jumlah_penduduk: number,
+    jumlah_penduduk_laki_laki: number,
+    jumlah_penduduk_perempuan: number,
+    persen_penduduk: number,
+    persen_penduduk_laki_laki: number,
+    persen_penduduk_perempuan: number
+  },
+  agama: {
+    data: StatistikAgama[],
+  }
 }

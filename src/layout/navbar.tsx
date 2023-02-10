@@ -49,16 +49,13 @@ export default function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto gap-lg-3">
+          <ul className="navbar-nav ms-auto gap-lg-2">
             <li className="nav-item">
               <ActiveLink activeClassName="active" className="nav-link" href="/">
                 Beranda
               </ActiveLink>
             </li>
             <li className="nav-item dropdown">
-              {/* <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Tentang Kami
-              </a> */}
               <ActiveLink activeClassName="active" exactactiveclassname='active' className="nav-link dropdown-toggle" aria-expanded="false" href="/tentang-kami">
                 Tentang Kami
               </ActiveLink>
@@ -80,14 +77,28 @@ export default function Navbar() {
                 </li>
               </ul>
             </li>
-            {/* <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
+            <li className="nav-item dropdown">
+              <ActiveLink activeClassName="active" exactactiveclassname='active' className="nav-link dropdown-toggle" aria-expanded="false" href="/statistik">
+                Statistik
+              </ActiveLink>
+              <ul className="dropdown-menu fade-up">
+                <li>
+                  <ActiveLink activeClassName="active" className="dropdown-item" href="/statistik">
+                    Umur
+                  </ActiveLink>
+                </li>
+                <li>
+                  <ActiveLink activeClassName="active" className="dropdown-item" href="/statistik/agama">
+                    Agama
+                  </ActiveLink>
+                </li>
+              </ul>
             </li>
             <li className="nav-item">
-              <a className="nav-link disabled">Disabled</a>
-            </li> */}
+              <ActiveLink activeClassName="active" className="nav-link" href="/artikel">
+                Artikel
+              </ActiveLink>
+            </li>
           </ul>
         </div>
       </div>

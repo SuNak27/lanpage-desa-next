@@ -2,8 +2,8 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useAppContext } from "@/utils/context";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "@/utils/context";
 import ActiveLink from "@/component/ActiveLink";
 
 type PathArray = {
@@ -18,16 +18,17 @@ export default function Hero() {
     "/assets/images/2.jpg",
   ];
   const router = useRouter();
-  const { state } = useAppContext();
+  const { title, desa } = useContext(Context);
   const [breadcrumbs, setBreadcrumbs] = useState<PathArray>();
   useEffect(() => {
     if (router) {
-      const linkPath = router.asPath.split('/');
+      const linkPath = router.pathname.split('/');
       linkPath.shift();
 
       const pathArray: PathArray = linkPath.map((path, i) => {
+
         return {
-          breadcrumb: path,
+          breadcrumb: path.includes("[") ? title : path,
           href: "/" + linkPath.slice(0, i + 1).join("/"),
         };
       });
@@ -78,7 +79,7 @@ export default function Hero() {
                   <div className="container">
                     <h1 className="fw-bold">Sistem Informasi Desa</h1>
                     <h5 className="hero-text mb-3">
-                      Karanganyar, Paiton, Probolinggo
+                      {desa?.nama_desa}, {desa?.nama_kecamatan}, {desa?.nama_kabupaten}
                     </h5>
                     <a href="#" className="btn btn-primary">
                       Selengkapnya
@@ -110,31 +111,31 @@ export default function Hero() {
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
                               <h5 className="card-title">Penduduk</h5>
-                              <p className="card-text">2.000.000</p>
+                              <p className="card-text">{desa?.jumlah_penduduk}</p>
                             </div>
                           </div>
                         </SwiperSlide>
                         <SwiperSlide>
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
-                              <h5 className="card-title">Penduduk</h5>
-                              <p className="card-text">2.000.000</p>
+                              <h5 className="card-title">Keluarga</h5>
+                              <p className="card-text">{desa?.jumlah_keluarga}</p>
                             </div>
                           </div>
                         </SwiperSlide>
                         <SwiperSlide>
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
-                              <h5 className="card-title">Penduduk</h5>
-                              <p className="card-text">2.000.000</p>
+                              <h5 className="card-title">Rumah Tangga</h5>
+                              <p className="card-text">{desa?.jumlah_rumah_tangga}</p>
                             </div>
                           </div>
                         </SwiperSlide>
                         <SwiperSlide>
                           <div className="card rounded-lg">
                             <div className="card-body text-center">
-                              <h5 className="card-title">Penduduk</h5>
-                              <p className="card-text">2.000.000</p>
+                              <h5 className="card-title">Dusun</h5>
+                              <p className="card-text">{desa?.jumlah_dusun}</p>
                             </div>
                           </div>
                         </SwiperSlide>
@@ -175,7 +176,7 @@ export default function Hero() {
                 <div className="hero-caption position-relative">
                   <div className="container">
                     <h3 className="fw-bold mt-5">
-                      {state?.title ? state?.title : "Sistem Informasi Desa"}
+                      {title ? title : "Sistem Informasi Desa"}
                     </h3>
                     <nav aria-label="breadcrumb">
                       <ol className="breadcrumb">

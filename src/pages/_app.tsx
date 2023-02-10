@@ -7,6 +7,30 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useEffect } from "react";
 import { ContextProvider } from "@/utils/context";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+  ArcElement,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  ArcElement,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend,
+  Filler,
+  Tooltip,
+  Title
+);
 
 export type AppProps = {
   Component: React.ComponentType & { getLayout?: (page: React.ReactNode) => React.ReactNode };

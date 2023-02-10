@@ -25,9 +25,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         })
       })
       .catch(err => {
-        commit({ type: "ERROR", payload: err })
+        console.error(err)
       })
   }, [])
+  
   return (
     <>
       <Header />

@@ -17,6 +17,15 @@ const nextConfig = {
       }
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/surat',
+        destination: '/',
+        permanent: true,
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig

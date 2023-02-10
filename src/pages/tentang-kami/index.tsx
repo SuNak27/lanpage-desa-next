@@ -1,11 +1,11 @@
 import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
-import { useAppContext } from "@/utils/context";
-import { useEffect } from "react"
+import { AboutContext } from "@/utils/context"
+import { useContext, useEffect } from "react"
 
 export default function About() {
-  const { state } = useAppContext()
+  const data = useContext(AboutContext)
   return (
     <>
       <Header title="Tentang Kami" />
@@ -14,7 +14,7 @@ export default function About() {
         <div className="row">
           <div className="col-lg-12">
             <p>
-              {state.data?.tentang_kami?.profil_desa}
+              {data?.profil_desa}
             </p>
           </div>
         </div>

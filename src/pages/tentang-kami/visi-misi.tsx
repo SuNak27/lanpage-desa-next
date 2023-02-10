@@ -1,10 +1,11 @@
 import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
-import { useAppContext } from "@/utils/context"
+import { AboutContext } from "@/utils/context"
+import { useContext } from "react"
 
 export default function VisiMisi() {
-  const { state } = useAppContext()
+  const data = useContext(AboutContext)
   return (
     <>
       <Header title="Visi Misi" />
@@ -13,7 +14,7 @@ export default function VisiMisi() {
         <div className="row">
           <div className="col-lg-12">
             <p className="text-justify">
-              {state.data?.tentang_kami?.visi}
+              {data?.visi}
             </p>
           </div>
         </div>
@@ -21,7 +22,7 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Misi</h4>
         <div className="row">
           <div className="col-lg-12">
-            {state.data?.tentang_kami?.misi}
+            {data?.misi}
           </div>
         </div>
       </div>
