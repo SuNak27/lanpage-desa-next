@@ -3,12 +3,13 @@ import { aparat, berita_baru, faq, layanan } from "@/dummy/data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import Header from "@/layout/header";
-import { useContext } from "react";
-import { Context } from "@/utils/context";
-import parse from 'html-react-parser';
+import { useEffect } from "react";
+import { useAppContext } from "@/utils/context";
+import parse from 'html-react-parser'
 
 export default function Home() {
-  const { desa, masterData } = useContext(Context);
+  const { state, commit } = useAppContext();
+  
   function image(image: string) {
     if (image !== "") {
       return (
@@ -281,7 +282,9 @@ export default function Home() {
 
       <section className="map">
         <div className="p-0 m-0">
-          {parse(masterData?.map_desa || '')}
+          {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.7499959945194!2d113.4958403143558!3d-7.709953678511709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd703f599489a1b%3A0xf34d3ceb3f9ddf2c!2sUniversitas%20Nurul%20Jadid!5e0!3m2!1sid!2sid!4v1675631267104!5m2!1sid!2sid" width="100%" height="450" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe> */}
+
+          {parse(state.data?.master_data?.map_desa ?? '')}
         </div>
       </section>
     </>
