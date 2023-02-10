@@ -106,11 +106,7 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
                   {kategori.map((item, index) => (
                     <ActiveLink className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" key={index} activeClassName={"active"} href={`/kategori/${item.slug}`}>
                       {item.nama_kategori}
-                      {/* <span className={`badge bg-primary rounded-pill ` +
-                        item.artikel.length ? '' : 'd-none'
-                      }>{item.artikel.length}</span> */}
                       {badge(item.artikel.length)}
-
                     </ActiveLink>
                   ))}
                 </ul>
