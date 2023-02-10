@@ -2,6 +2,7 @@ import Layout from "@/layout"
 import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
 import { ContextProvider, useAppContext } from "@/utils/context"
+import Skeleton from "react-loading-skeleton"
 
 export default function About() {
   const { state } = useAppContext()
@@ -12,6 +13,12 @@ export default function About() {
         <h4 className="fw-semibold mb-4">Profil Desa</h4>
         <div className="row">
           <div className="col-lg-12">
+            {state.tag === 'loading' && (
+              <>
+                <Skeleton height={20} className={'float-end'} width={'90%'} />
+                <Skeleton height={20} count={5} />
+              </>
+            )}
             <p>
               {state.data?.tentang_kami?.profil_desa}
             </p>

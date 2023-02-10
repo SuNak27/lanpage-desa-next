@@ -2,6 +2,7 @@ import ActiveLink from "@/component/ActiveLink";
 import { api } from "@/utils/apiService";
 import { useAppContext } from "@/utils/context";
 import { useEffect } from "react";
+import Skeleton from "react-loading-skeleton";
 
 export default function ArtikelLayout({ children }: { children: React.ReactNode }) {
   const { state, commit } = useAppContext();
@@ -80,6 +81,20 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
               <div className="mt-4">
                 <h3 className="fw-bolder my-4">Berita Terbaru</h3>
 
+                {state.tag === 'loading' && (
+                  [1, 2, 3].map((item, index) => (
+                    <div className="d-flex my-3" key={index}>
+                      <div style={{ width: '30%' }}>
+                        <Skeleton width={100} height={70} />
+                      </div>
+                      <div className="p-2" style={{ width: '70%' }}>
+                        <Skeleton width={100} height={10} />
+                        <Skeleton width={200} height={10} />
+                        <Skeleton width={200} height={10} />
+                      </div>
+                    </div>
+                  ))
+                )}
                 {state.data?.artikel?.map((item, index) => (
                   <div className="d-flex my-3" key={index}>
                     <div style={{ width: '30%' }}>
@@ -111,6 +126,14 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
                     Semua
                     <span className="badge bg-primary rounded-pill">{state.data?.artikel?.length}</span>
                   </button>
+                  {state.tag === 'loading' && (
+                    [1, 2, 3].map((item, index) => (
+                      <li className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" key={index}>
+                        <Skeleton width={100} height={10} />
+                        <Skeleton width={50} height={10} />
+                      </li>
+                    ))
+                  )}
                   {state.data?.kategori?.map((item, index) => (
                     <ActiveLink className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" key={index} activeClassName={"active"} href={`/kategori/${item.slug}`}>
                       {item.nama_kategori}

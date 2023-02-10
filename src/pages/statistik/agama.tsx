@@ -4,6 +4,7 @@ import StatistikLayout from "@/layout/statistik"
 import { ContextProvider, useAppContext } from "@/utils/context"
 import { useContext } from "react"
 import { Pie } from "react-chartjs-2"
+import Skeleton from "react-loading-skeleton"
 
 export default function Statistik() {
   const { state } = useAppContext()
@@ -45,7 +46,13 @@ export default function Statistik() {
             <div className="col-lg-12 mx-auto mb-4" style={{
               maxWidth: "400px",
             }}>
-              <Pie data={chartData} width={10} height={10} />
+              {state.tag === "loading" ? (
+                <>
+                  <Skeleton height={400} circle width={400} />
+                </>
+              ) : (
+                <Pie data={chartData} width={10} height={10} />
+              )}
             </div>
           </div>
           <div className="col-lg-12">
@@ -60,6 +67,27 @@ export default function Statistik() {
                 </tr>
               </thead>
               <tbody>
+                {state.tag === "loading" && (
+                  [1, 2, 3, 4, 5].map((item, index) => (
+                    <tr key={index}>
+                      <th scope="row" className="text-center">
+                        <Skeleton width={20} />
+                      </th>
+                      <td>
+                        <Skeleton width={100} />
+                      </td>
+                      <td>
+                        <Skeleton width={100} />
+                      </td>
+                      <td>
+                        <Skeleton width={100} />
+                      </td>
+                      <td>
+                        <Skeleton width={100} />
+                      </td>
+                    </tr>
+                  ))
+                )}
                 {state.data?.statistik?.agama.data.map((agama, index) => (
                   <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>

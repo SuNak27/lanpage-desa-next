@@ -3,6 +3,7 @@ import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
 import { ContextProvider, useAppContext } from "@/utils/context"
 import { useContext } from "react"
+import Skeleton from "react-loading-skeleton"
 
 export default function AparaturDesa() {
   const { state } = useAppContext()
@@ -23,6 +24,16 @@ export default function AparaturDesa() {
                 </tr>
               </thead>
               <tbody>
+                {state.tag === 'loading' && (
+                  [1, 2, 3, 4, 5].map((item, index) => (
+                    <tr key={index}>
+                      <th scope="row" className="text-center"><Skeleton height={20} /></th>
+                      <td><Skeleton height={20} /></td>
+                      <td><Skeleton height={20} /></td>
+                      <td><Skeleton height={20} /></td>
+                    </tr>
+                  ))
+                )}
                 {state.data?.tentang_kami?.desa_struktural.map((item, index) => (
                   <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>

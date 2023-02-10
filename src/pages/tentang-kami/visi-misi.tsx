@@ -3,6 +3,7 @@ import AboutLayout from "@/layout/about"
 import Header from "@/layout/header"
 import { ContextProvider, useAppContext } from "@/utils/context"
 import { useContext } from "react"
+import Skeleton from "react-loading-skeleton"
 
 export default function VisiMisi() {
   const { state } = useAppContext()
@@ -13,6 +14,11 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Visi</h4>
         <div className="row">
           <div className="col-lg-12">
+            {state.tag === 'loading' && (
+              <>
+                <Skeleton height={20} count={5} />
+              </>
+            )}
             <p className="text-justify">
               {state.data?.tentang_kami?.visi}
             </p>
@@ -22,6 +28,11 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Misi</h4>
         <div className="row">
           <div className="col-lg-12">
+            {state.tag === 'loading' && (
+              <>
+                <Skeleton height={20} count={5} />
+              </>
+            )}
             {state.data?.tentang_kami?.misi}
           </div>
         </div>
