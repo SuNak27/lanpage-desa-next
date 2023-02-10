@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useEffect } from "react";
+import { ContextProvider } from "@/utils/context";
 
 export type AppProps = {
   Component: React.ComponentType & { getLayout?: (page: React.ReactNode) => React.ReactNode };
@@ -19,6 +20,12 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   )
 
-  const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
+  const getLayout = Component.getLayout || ((page) => {
+    return (
+      <ContextProvider>
+        <Layout>{page}</Layout>
+      </ContextProvider>
+    )
+  });
   return getLayout(<Component {...pageProps} />);
 }

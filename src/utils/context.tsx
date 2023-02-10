@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { Data } from "./dataInterface";
 
 type ContextType = {
@@ -20,10 +20,10 @@ type State = {
 
 type Action =
   | { type: "FETCH" }
-  | { type: "CHANGE_TITLE"; payload: string }
   | { type: "SUCCESS"; payload: Data }
-  | { type: "EMPTY" }
-  | { type: "ERROR"; payload: string };
+  | { type: "ERROR"; payload: string }
+  | { type: "CHANGE_TITLE"; payload: string }
+  | { type: "EMPTY" };
 
 export const Context = createContext<ContextType>({
   state: {
@@ -37,8 +37,8 @@ export const Context = createContext<ContextType>({
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
   const initialState: State = {
-    title: "Beranda",
     tag: "idle",
+    title: "Beranda",
     data: null,
     errorMessage: "",
   };
@@ -73,19 +73,17 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
               data: action.payload,
             };
           }
-          case "ERROR": {
-            return {
-              ...state,
-              tag: "error",
-              data: null,
-              errorMessage: action.payload,
-            };
-          }
           case "EMPTY": {
             return {
               ...state,
               tag: "empty",
-              data: null,
+            };
+          }
+          case "ERROR": {
+            return {
+              ...state,
+              tag: "error",
+              errorMessage: action.payload,
             };
           }
           default:
@@ -104,7 +102,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
             return state;
         }
       }
-      case "empty": {
+      case "error": {
         switch (action.type) {
           case "FETCH": {
             return {
@@ -116,7 +114,7 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
             return state;
         }
       }
-      case "error": {
+      case "empty": {
         switch (action.type) {
           case "FETCH": {
             return {
