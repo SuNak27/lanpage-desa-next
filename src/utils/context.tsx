@@ -104,6 +104,12 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
               tag: "loading",
             };
           }
+          case "CHANGE_TITLE": {
+            return {
+              ...state,
+              title: action.payload,
+            };
+          }
           default:
             return state;
         }
@@ -116,6 +122,12 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
               tag: "loading",
             };
           }
+          case "CHANGE_TITLE": {
+            return {
+              ...state,
+              title: action.payload,
+            };
+          }
           default:
             return state;
         }
@@ -126,6 +138,12 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
             return {
               ...state,
               tag: "loading",
+            };
+          }
+          case "CHANGE_TITLE": {
+            return {
+              ...state,
+              title: action.payload,
             };
           }
           default:

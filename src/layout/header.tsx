@@ -10,7 +10,7 @@ export default function Header(props: Props) {
   const { state, commit } = useAppContext();
 
   useEffect(() => {
-    commit({ type: "CHANGE_TITLE", payload: props.title || "Beranda" });
+    commit({ type: "CHANGE_TITLE", payload: props.title ?? "Beranda" });
   }, []);
 
   return (

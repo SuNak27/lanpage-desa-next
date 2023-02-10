@@ -89,10 +89,10 @@ export default function Home() {
                           <div className="col-3">{image(item.gambar ?? '')}</div>
                           <div className="col-9">
                             <h5 className="card-title">{item.judul}</h5>
-                            <p className="card-text">
+                            <span className="card-text">
                               {/* {item.isi.substring(0, 400)}... */}
                               {parse(item.isi.substring(0, 400))}
-                            </p>
+                            </span>
                             <a href="#" className="btn btn-primary">
                               Selengkapnya
                             </a>

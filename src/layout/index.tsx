@@ -24,10 +24,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }
         })
       })
-      .catch(err => {
+      .catch(([info_desa, masterData]) => {
+        console.log(masterData);
         commit({
           type: "ERROR",
-          payload: err.message
+          payload: info_desa.message
         })
       })
   }, [])
