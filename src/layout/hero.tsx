@@ -81,7 +81,7 @@ export default function Hero() {
                     <h1 className="fw-bold">Sistem Informasi Desa</h1>
 
                     <h5 className="hero-text mb-3">
-                      {state.tag == 'loading' ? 'Loading...' : state.data?.master_data?.nama_desa + ', ' + state.data?.master_data?.nama_kecamatan + ', ' + state.data?.master_data?.nama_kabupaten}
+                      {state.tag === 'loading' ? 'Loading...' : state.tag == 'error' ? '' : state.data?.master_data?.nama_desa + ', ' + state.data?.master_data?.nama_kecamatan + ', ' + state.data?.master_data?.nama_kabupaten}
                     </h5>
 
 
@@ -116,11 +116,10 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Penduduk</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' && (
-                                  <Skeleton />
+                                {state.tag == 'loading' || state.tag == "error" && (
+                                  < Skeleton />
                                 )}
                                 {state.data?.info_desa?.jumlah_penduduk}
-
                               </p>
                             </div>
                           </div>
@@ -130,7 +129,7 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Keluarga</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' && (
+                                {state.tag == 'loading' || state.tag == "error" && (
                                   <Skeleton />
                                 )}
                                 {state.data?.info_desa?.jumlah_keluarga}
@@ -144,7 +143,7 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Rumah Tangga</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' && (
+                                {state.tag == 'loading' || state.tag == "error" && (
                                   <Skeleton />
                                 )}
                                 {state.data?.info_desa?.jumlah_rumah_tangga}
@@ -157,7 +156,7 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Dusun</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' && (
+                                {state.tag == 'loading' || state.tag == "error" && (
                                   <Skeleton />
                                 )}
                                 {state.data?.info_desa?.jumlah_dusun}

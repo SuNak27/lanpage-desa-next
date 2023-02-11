@@ -46,7 +46,7 @@ export default function Statistik() {
             <div className="col-lg-12 mx-auto mb-4" style={{
               maxWidth: "400px",
             }}>
-              {state.tag === "loading" ? (
+              {state.tag == 'loading' || state.tag == "error" ? (
                 <>
                   <Skeleton height={400} circle width={400} />
                 </>
@@ -67,7 +67,7 @@ export default function Statistik() {
                 </tr>
               </thead>
               <tbody>
-                {state.tag === "loading" && (
+                {state.tag == 'loading' || state.tag == "error" && (
                   [1, 2, 3, 4, 5].map((item, index) => (
                     <tr key={index}>
                       <th scope="row" className="text-center">

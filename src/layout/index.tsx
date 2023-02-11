@@ -31,7 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               }
             })
           })
-          .catch(([info_desa, desa]) => {
+          .catch((info_desa) => {
             commit({
               type: "ERROR",
               payload: info_desa.message

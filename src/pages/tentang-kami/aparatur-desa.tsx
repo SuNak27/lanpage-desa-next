@@ -24,7 +24,7 @@ export default function AparaturDesa() {
                 </tr>
               </thead>
               <tbody>
-                {state.tag === 'loading' && (
+                {state.tag == 'loading' || state.tag == "error" && (
                   [1, 2, 3, 4, 5].map((item, index) => (
                     <tr key={index}>
                       <th scope="row" className="text-center"><Skeleton height={20} /></th>

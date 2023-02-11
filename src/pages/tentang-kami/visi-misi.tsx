@@ -14,7 +14,7 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Visi</h4>
         <div className="row">
           <div className="col-lg-12">
-            {state.tag === 'loading' && (
+            {state.tag == 'loading' || state.tag == "error" && (
               <>
                 <Skeleton height={20} count={5} />
               </>
@@ -28,7 +28,7 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Misi</h4>
         <div className="row">
           <div className="col-lg-12">
-            {state.tag === 'loading' && (
+            {state.tag == 'loading' || state.tag == "error" && (
               <>
                 <Skeleton height={20} count={5} />
               </>

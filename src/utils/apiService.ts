@@ -9,20 +9,12 @@ export class Api {
         // If the response is not ok, throw an error and stop the execution
         Swal.fire({
           icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
+          title: "Error : " + res.status,
+          text: res.statusText,
         });
-        throw new Error("Something went wrong!");
       }
       return await res.json();
     } catch (error: any) {
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: "Something went wrong!",
-      // });
-
-      // throw new Error(error);
       return Promise.reject(error);
     }
   }

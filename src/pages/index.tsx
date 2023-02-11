@@ -139,7 +139,7 @@ export default function Home() {
               },
             }}
           >
-            {state.tag === 'loading' && (
+            {state.tag == 'loading' || state.tag == "error" && (
               [1, 2, 3].map((item) => (
                 <SwiperSlide key={item}>
                   <div className="p-3 card-layanan">
@@ -216,8 +216,8 @@ export default function Home() {
               },
             }}
           >
-            {state.tag === 'loading' && (
-              [1, 2].map((item) => (
+            {state.tag == 'loading' || state.tag == "error" && (
+              [1, 2, 3].map((item) => (
                 <SwiperSlide key={item}>
                   <div className="text-center text-white">
                     <Skeleton width={200} height={200} circle className="mb-3" />
@@ -303,7 +303,7 @@ export default function Home() {
             </div>
             <div className="col-lg-8">
               <div className="accordion" id="accordionPanelsStayOpenExample">
-                {state.tag === 'loading' && (
+                {state.tag == 'loading' || state.tag == "error" && (
                   [1, 2, 3, 4, 5].map((item) => (
                     <div className="accordion-item" key={item}>
                       <h2 className="accordion-header" id={'faq_' + item}>

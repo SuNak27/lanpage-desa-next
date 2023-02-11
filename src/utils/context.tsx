@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useReducer, useState } from "react";
+import Swal from "sweetalert2";
 import { api } from "./apiService";
 import { InfoDesa, MasterData, Data } from "./dataInterface";
 
@@ -84,6 +85,15 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
             };
           }
           case "ERROR": {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: action.payload,
+              buttonsStyling: false,
+              customClass: {
+                confirmButton: "btn btn-primary btn-sm",
+              },
+            })
             return {
               ...state,
               tag: "error",
@@ -114,12 +124,6 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
       }
       case "error": {
         switch (action.type) {
-          case "FETCH": {
-            return {
-              ...state,
-              tag: "loading",
-            };
-          }
           case "CHANGE_TITLE": {
             return {
               ...state,
