@@ -13,7 +13,7 @@ export default function About() {
         <h4 className="fw-semibold mb-4">Profil Desa</h4>
         <div className="row">
           <div className="col-lg-12">
-            {state.tag == 'loading' || state.tag == "error" && (
+            {state.tag !== 'success' && (
               <>
                 <Skeleton height={20} className={'float-end'} width={'90%'} />
                 <Skeleton height={20} count={5} />

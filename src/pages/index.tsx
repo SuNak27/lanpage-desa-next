@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
@@ -12,6 +13,7 @@ export default function Home() {
   function image(image: string) {
     if (image !== "") {
       return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img alt="image" src={process.env.NEXT_PUBLIC_IMAGE_URL + image ?? ''} className="img-news rounded-4" style={{
           objectFit: 'cover',
           width: '100%',
@@ -20,6 +22,7 @@ export default function Home() {
       );
     } else {
       return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img alt="image" width={300} height={150} src={'/assets/images/no-image.png'} className="img-news rounded-4" style={{
           objectFit: 'cover',
           width: '100%',
@@ -33,9 +36,9 @@ export default function Home() {
     if (state.data?.info_desa || state.data?.master_data) {
       return
     };
-    commit({ type: "FETCH" });
+    commit({ type: 'FETCH' })
 
-  }, [])
+  }, [commit, state.data?.info_desa, state.data?.master_data])
   return (
     <>
       <Header title={'Beranda'}></Header>
@@ -63,8 +66,8 @@ export default function Home() {
                     }}
                     className="news-swiper"
                   >
-                    {state.tag === 'loading' && (
-                      <SwiperSlide className="mb-5">
+                    {state.tag !== 'success' && (
+                      <div className="mb-5">
                         <div className="card-body row mb-4">
                           <div className="col-3">
                             <Skeleton width={250} height={150} />
@@ -76,7 +79,7 @@ export default function Home() {
                             <Skeleton width={'100%'} height={20} />
                           </div>
                         </div>
-                      </SwiperSlide>
+                      </div>
                     )}
                     {state.data?.info_desa?.artikel?.map((item, index) => (
                       <SwiperSlide key={index} className="mb-5">
@@ -139,7 +142,7 @@ export default function Home() {
               },
             }}
           >
-            {state.tag == 'loading' || state.tag == "error" && (
+            {state.tag !== 'success' && (
               [1, 2, 3].map((item) => (
                 <SwiperSlide key={item}>
                   <div className="p-3 card-layanan">
@@ -216,12 +219,11 @@ export default function Home() {
               },
             }}
           >
-            {state.tag == 'loading' || state.tag == "error" && (
+            {state.tag !== 'success' && (
               [1, 2, 3].map((item) => (
                 <SwiperSlide key={item}>
                   <div className="text-center text-white">
                     <Skeleton width={200} height={200} circle className="mb-3" />
-
                     <Skeleton width={'40%'} height={20} count={2} />
                   </div>
 
@@ -235,7 +237,7 @@ export default function Home() {
                     className="octagon mx-auto mb-3 d-flex bg-success"
                     style={{ width: 200, height: 200 }}
                   >
-                    {/* <img width={300} height={300} alt="foto" src={item.} /> */}
+                    <img width={300} height={300} alt="foto" src={'https://picsum.photos/200/200'} />
                   </div>
                   <div className="mb-0">
                     <a
@@ -303,7 +305,7 @@ export default function Home() {
             </div>
             <div className="col-lg-8">
               <div className="accordion" id="accordionPanelsStayOpenExample">
-                {state.tag == 'loading' || state.tag == "error" && (
+                {state.tag !== 'success' && (
                   [1, 2, 3, 4, 5].map((item) => (
                     <div className="accordion-item" key={item}>
                       <h2 className="accordion-header" id={'faq_' + item}>

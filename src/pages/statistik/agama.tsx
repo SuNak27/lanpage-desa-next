@@ -2,7 +2,6 @@ import Layout from "@/layout"
 import Header from "@/layout/header"
 import StatistikLayout from "@/layout/statistik"
 import { ContextProvider, useAppContext } from "@/utils/context"
-import { useContext } from "react"
 import { Pie } from "react-chartjs-2"
 import Skeleton from "react-loading-skeleton"
 
@@ -46,7 +45,7 @@ export default function Statistik() {
             <div className="col-lg-12 mx-auto mb-4" style={{
               maxWidth: "400px",
             }}>
-              {state.tag == 'loading' || state.tag == "error" ? (
+              {state.tag !== 'success' ? (
                 <>
                   <Skeleton height={400} circle width={400} />
                 </>
@@ -67,7 +66,7 @@ export default function Statistik() {
                 </tr>
               </thead>
               <tbody>
-                {state.tag == 'loading' || state.tag == "error" && (
+                {state.tag !== 'success' && (
                   [1, 2, 3, 4, 5].map((item, index) => (
                     <tr key={index}>
                       <th scope="row" className="text-center">

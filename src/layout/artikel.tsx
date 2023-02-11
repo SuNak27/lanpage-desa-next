@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import ActiveLink from "@/component/ActiveLink";
 import { api } from "@/utils/apiService";
 import { useAppContext } from "@/utils/context";
@@ -36,7 +37,7 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
       default:
         break;
     }
-  }, [state.tag])
+  }, [commit, state.data?.artikel, state.data?.kategori, state.tag])
 
   function badge(props: number) {
     if (props > 0) {
@@ -81,7 +82,7 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
               <div className="mt-4">
                 <h3 className="fw-bolder my-4">Berita Terbaru</h3>
 
-                {state.tag == 'loading' || state.tag == "error" && (
+                {state.tag !== 'success' && (
                   [1, 2, 3].map((item, index) => (
                     <div className="d-flex my-3" key={index}>
                       <div style={{ width: '30%' }}>
@@ -126,8 +127,8 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
                     Semua
                     <span className="badge bg-primary rounded-pill">{state.data?.artikel?.length}</span>
                   </button>
-                  {state.tag == 'loading' || state.tag == "error" && (
-                    [1, 2, 3].map((item, index) => (
+                  {state.tag !== 'success' && (
+                    [1, 2, 3, 4, 5].map((item, index) => (
                       <li className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" key={index}>
                         <Skeleton width={100} height={10} />
                         <Skeleton width={50} height={10} />

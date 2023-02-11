@@ -43,7 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
 
 
-  }, [state.tag])
+  }, [commit, state.data?.info_desa, state.data?.master_data, state.tag])
 
   return (
     <>

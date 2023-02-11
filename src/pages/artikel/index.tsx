@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Layout from "@/layout"
 import ArtikelLayout from "@/layout/artikel"
 import Header from "@/layout/header"
@@ -12,7 +13,7 @@ export default function Artikel() {
       <Header title="Artikel" />
       <div className="p-4 rounded-3">
         <div className="row g-4 overflow-hidden mb-5">
-          {state.tag == 'loading' || state.tag == "error" && (
+          {state.tag !== 'success' && (
             [1, 2, 3, 4, 5].map((item, index) => (
               <div className="col-12" key={index}>
                 <div className="card overflow-hidden w-100 shadow border-0">

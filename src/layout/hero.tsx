@@ -37,7 +37,7 @@ export default function Hero() {
       setBreadcrumbs(pathArray);
 
     }
-  }, [router]);
+  }, [router, state.title]);
 
   if (!breadcrumbs) {
     return null;
@@ -116,10 +116,11 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Penduduk</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' || state.tag == "error" && (
-                                  < Skeleton />
+                                {state.tag !== 'success' ? (
+                                  <Skeleton width={'30%'} />
+                                ) : (
+                                  state.data?.info_desa?.jumlah_penduduk
                                 )}
-                                {state.data?.info_desa?.jumlah_penduduk}
                               </p>
                             </div>
                           </div>
@@ -129,11 +130,11 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Keluarga</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' || state.tag == "error" && (
-                                  <Skeleton />
+                                {state.tag !== 'success' ? (
+                                  <Skeleton width={'30%'} />
+                                ) : (
+                                  state.data?.info_desa?.jumlah_keluarga
                                 )}
-                                {state.data?.info_desa?.jumlah_keluarga}
-
                               </p>
                             </div>
                           </div>
@@ -143,10 +144,11 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Rumah Tangga</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' || state.tag == "error" && (
-                                  <Skeleton />
+                                {state.tag !== 'success' ? (
+                                  <Skeleton width={'30%'} />
+                                ) : (
+                                  state.data?.info_desa?.jumlah_rumah_tangga
                                 )}
-                                {state.data?.info_desa?.jumlah_rumah_tangga}
                               </p>
                             </div>
                           </div>
@@ -156,10 +158,11 @@ export default function Hero() {
                             <div className="card-body text-center">
                               <h5 className="card-title">Dusun</h5>
                               <p className="card-text">
-                                {state.tag == 'loading' || state.tag == "error" && (
-                                  <Skeleton />
+                                {state.tag !== 'success' ? (
+                                  <Skeleton width={'30%'} />
+                                ) : (
+                                  state.data?.info_desa?.jumlah_dusun
                                 )}
-                                {state.data?.info_desa?.jumlah_dusun}
                               </p>
                             </div>
                           </div>
