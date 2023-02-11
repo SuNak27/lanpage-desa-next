@@ -45,6 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commit, state.data, state.data?.info_desa, state.data?.master_data, state.tag])
 
   return (

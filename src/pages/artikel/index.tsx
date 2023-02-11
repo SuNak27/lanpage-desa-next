@@ -4,6 +4,7 @@ import ArtikelLayout from "@/layout/artikel"
 import Header from "@/layout/header"
 import { ContextProvider, useAppContext } from "@/utils/context"
 import parse from 'html-react-parser';
+import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
 export default function Artikel() {
@@ -58,7 +59,8 @@ export default function Artikel() {
                       </span>
                     </h6>
                     <h5 className="card-title fw-semibold truncate mt-3">
-                      <a href="" className="text-decoration-none text-dark">{item.judul}</a>
+                      <Link href={`/artikel/${item.slug}`} className="text-decoration-none title-artikel text-dark"
+                      >{item.judul}</Link>
                     </h5>
                     <div className="card-text truncate-2">
                       {/* {parse(item.isi)} */}

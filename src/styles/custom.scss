@@ -220,6 +220,18 @@ footer {
   object-fit: cover;
 }
 
+.img-berita-xl {
+  width: 100%;
+  height: 30em;
+  object-fit: cover;
+}
+
+.title-artikel:hover {
+  color: var(--bs-primary) !important;
+  transition: 0.1s;
+  text-decoration: none;
+}
+
 .bg-overlay-berita {
   position: absolute;
   /* linier gradient from top to bottom */

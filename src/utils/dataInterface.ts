@@ -57,6 +57,7 @@ export interface Data {
   statistik?: Statistik,
   artikel?: Artikel[],
   kategori?: Kategori[],
+  detail_artikel?: Artikel,
 }
 
 

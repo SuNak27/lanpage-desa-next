@@ -37,7 +37,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
         break;
     }
 
-  }, [state.tag])
+  }, [commit, state.data?.tentang_kami, state.tag])
   return (
     <>
       <div className="container m-5 p-5">

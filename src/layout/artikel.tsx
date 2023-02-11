@@ -2,12 +2,35 @@
 import ActiveLink from "@/component/ActiveLink";
 import { api } from "@/utils/apiService";
 import { useAppContext } from "@/utils/context";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 
 export default function ArtikelLayout({ children }: { children: React.ReactNode }) {
   const { state, commit } = useAppContext();
+  const router = useRouter();
   useEffect(() => {
+    if (router.query.slug) {
+      switch (state.tag) {
+        case "loading":
+          api.get("/artikel/" + router.query.slug).then((res) => {
+            commit({
+              type: "SUCCESS",
+              payload: {
+                detail_artikel: res.data,
+              }
+            })
+          }).catch((err) => {
+            commit({
+              type: "ERROR",
+              payload: err.message || "Terjadi kesalahan saat memuat data"
+            })
+          })
+          break;
+        default:
+          break;
+      }
+    }
     if (state.data?.artikel || state.data?.kategori) {
       return
     };
@@ -16,28 +39,28 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
       case "loading":
         Promise.all([
           api.get("/artikel"),
-          api.get("/kategori"),
+          api.get("/kategori")
         ])
           .then(([artikel, kategori]) => {
             commit({
               type: "SUCCESS",
               payload: {
                 artikel: artikel.data,
-                kategori: kategori.data
+                kategori: kategori.data,
               }
             })
           })
-          .catch((artikel) => {
+          .catch((err) => {
             commit({
               type: "ERROR",
-              payload: artikel.message || "Terjadi kesalahan saat memuat data"
+              payload: err.message || "Terjadi kesalahan saat memuat data"
             })
           })
         break;
       default:
         break;
     }
-  }, [commit, state.data?.artikel, state.data?.kategori, state.tag])
+  }, [commit, router.query.slug, state.data?.artikel, state.data?.detail_artikel, state.data?.kategori, state.tag])
 
   function badge(props: number) {
     if (props > 0) {
@@ -141,6 +164,11 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
                       {badge(item.artikel?.length ?? 0)}
                     </ActiveLink>
                   ))}
+                  <ActiveLink className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" activeClassName={"active"} href={`/kategori`}
+                  >
+                    Lihat Semua Kategori
+                    <i className="bi bi-arrow-right"></i>
+                  </ActiveLink>
                 </ul>
               </div>
             </div>
