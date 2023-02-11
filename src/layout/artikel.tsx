@@ -96,7 +96,7 @@ export default function ArtikelLayout({ children }: { children: React.ReactNode 
                     </div>
                   ))
                 )}
-                {state.data?.artikel?.map((item, index) => (
+                {state.data?.info_desa?.artikel?.map((item, index) => (
                   <div className="d-flex my-3" key={index}>
                     <div style={{ width: '30%' }}>
                       {image(item.gambar ?? '')}

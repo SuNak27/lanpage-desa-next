@@ -13,8 +13,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (state.data?.master_data || state.data?.info_desa) {
       return
     } else {
-      // commit({ type: "FETCH" })
+      commit({ type: "FETCH" })
     }
+
 
     switch (state.tag) {
       case "loading":
@@ -26,6 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             commit({
               type: "SUCCESS",
               payload: {
+                ...state.data,
                 master_data: info_desa.data,
                 info_desa: desa.data
               }
@@ -43,7 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
 
 
-  }, [commit, state.data?.info_desa, state.data?.master_data, state.tag])
+  }, [commit, state.data, state.data?.info_desa, state.data?.master_data, state.tag])
 
   return (
     <>

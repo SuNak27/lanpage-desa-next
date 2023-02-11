@@ -54,7 +54,6 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
           case "CHANGE_TITLE": {
             return {
               ...state,
-              tag: "success",
               title: action.payload,
             };
           }
@@ -72,6 +71,9 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
               ...prevState,
               ...newState,
             };
+
+            console.log(action.payload, "action.payload");
+
             return {
               ...state,
               tag: "success",
