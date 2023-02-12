@@ -23,6 +23,11 @@ const nextConfig = {
         source: '/surat',
         destination: '/',
         permanent: true,
+      },
+      {
+        source: '/artikel/kategori/',
+        destination: '/artikel',
+        permanent: true,
       }
     ]
   }

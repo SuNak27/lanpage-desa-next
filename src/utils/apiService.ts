@@ -1,12 +1,15 @@
 import Swal from "sweetalert2";
 
-export class Api {
-  async get(url: string) {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`);
-      if (!res.ok) {
+type Query = {
+  page?: number;
+  limit?: number;
+};
 
-        // If the response is not ok, throw an error and stop the execution
+export class Api {
+  async get(url: string, query?: Query) {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}` + new URLSearchParams(query as any));
+      if (!res.ok) {
         Swal.fire({
           icon: "error",
           title: "Error : " + res.status,

@@ -9,14 +9,38 @@ type State = {
     kategori: Kategori[];
     detail_artikel?: Artikel;
   };
+  page: number;
+  per_page: number;
+  total_pages: number;
+  total_data: number;
   slug?: string;
   errorMessage: string;
+  filter?: {
+    kategori?: string;
+    search?: string;
+  };
 }
 
 type Action =
   | { type: "FETCH" }
   | { type: "FETCH_DETAIL"; payload: string }
-  | { type: "SUCCESS"; payload: { artikel: Artikel[], kategori: Kategori[] } }
+  | {
+    type: "SUCCESS"; payload: {
+      artikel: Artikel[],
+      kategori: Kategori[],
+      total_pages: number,
+      per_page: number,
+      total_data: number,
+      filter?: {
+        kategori?: string,
+        search?: string,
+      }
+    }
+  }
+  | { type: "NEXT_PAGE" }
+  | { type: "PREV_PAGE" }
+  | { type: "SET_PAGE"; payload: number }
+  | { type: "FILTER"; payload: { kategori?: string, search?: string } }
   | { type: "SUCCESS_DETAIL"; payload: Artikel }
   | { type: "ERROR"; payload: string }
   | { type: "EMPTY" };
@@ -33,7 +57,15 @@ export const ArtikelContext = createContext<ArtikelContextType>({
       artikel: [],
       kategori: [],
     },
+    page: 1,
+    per_page: 10,
+    total_pages: 0,
+    total_data: 0,
     errorMessage: "",
+    filter: {
+      kategori: undefined,
+      search: undefined,
+    },
   },
   commit() { },
 });
@@ -44,7 +76,11 @@ const initialState: State = {
     artikel: [],
     kategori: [],
   },
+  page: 1,
+  total_pages: 0,
+  total_data: 0,
   errorMessage: "",
+  per_page: 10,
 };
 
 export const reducer = (state: State, action: Action): State => {
@@ -52,10 +88,24 @@ export const reducer = (state: State, action: Action): State => {
     case "idle": {
       switch (action.type) {
         case "FETCH": {
-          return { ...state, tag: "loading" };
+          return {
+            data: {
+              artikel: [],
+              kategori: [],
+            },
+            tag: "loading",
+            page: 1,
+            total_pages: 0,
+            total_data: 0,
+            errorMessage: "",
+            per_page: 10,
+          };
         }
         case "FETCH_DETAIL": {
           return { ...state, tag: "detail", slug: action.payload };
+        }
+        case "FILTER": {
+          return { ...state, tag: "loading", page: 1, filter: action.payload };
         }
         default: {
           return state;
@@ -87,11 +137,24 @@ export const reducer = (state: State, action: Action): State => {
             ...state, tag: "success", data: {
               artikel: action.payload.artikel,
               kategori: action.payload.kategori,
-            }
+            },
+            total_pages: action.payload.total_pages,
+            per_page: action.payload.per_page,
+            total_data: action.payload.total_data,
           };
         }
         case "ERROR": {
           return { ...state, tag: "error", errorMessage: action.payload };
+        }
+        case "EMPTY": {
+          return {
+            ...state,
+            tag: "empty",
+            data: {
+              artikel: [],
+              kategori: [],
+            },
+          };
         }
         default: {
           return state;
@@ -101,10 +164,35 @@ export const reducer = (state: State, action: Action): State => {
     case "success": {
       switch (action.type) {
         case "FETCH": {
-          return { ...state, tag: "loading" };
+          return {
+            data: {
+              artikel: [],
+              kategori: [],
+            },
+            tag: "loading",
+            page: 1,
+            total_pages: 0,
+            total_data: 0,
+            errorMessage: "",
+            per_page: 10,
+          };
         }
         case "FETCH_DETAIL": {
           return { ...state, tag: "detail", slug: action.payload };
+        }
+        case "NEXT_PAGE": {
+          return { ...state, page: state.page + 1, tag: "loading" };
+        }
+        case "PREV_PAGE": {
+          return { ...state, page: state.page - 1, tag: "loading" };
+        }
+        case "SET_PAGE": {
+          return { ...state, page: action.payload, tag: "loading" };
+        }
+        case "FILTER": {
+          return {
+            ...state, tag: "loading", page: 1, filter: action.payload
+          };
         }
         default: {
           return state;
@@ -134,7 +222,18 @@ export const reducer = (state: State, action: Action): State => {
     case "empty": {
       switch (action.type) {
         case "FETCH": {
-          return { ...state, tag: "loading" };
+          return {
+            data: {
+              artikel: [],
+              kategori: [],
+            },
+            tag: "loading",
+            page: 1,
+            total_pages: 0,
+            total_data: 0,
+            errorMessage: "",
+            per_page: 10,
+          };
         }
         default: {
           return state;
@@ -165,24 +264,34 @@ export const ArtikelProvider = ({ children }: { children: React.ReactNode }) => 
         break;
       }
       case "loading": {
-        if (state.data.artikel.length > 0 && state.data.kategori.length > 0) {
-          commit({
-            type: "SUCCESS", payload: {
-              artikel: state.data.artikel,
-              kategori: state.data.kategori,
-            }
-          });
-          return;
-        }
+        // if (state.data.artikel.length > 0 && state.data.kategori.length > 0) {
+        //   commit({
+        //     type: "SUCCESS", payload: {
+        //       artikel: state.data.artikel,
+        //       kategori: state.data.kategori,
+        //       total_pages: state.total_pages,
+        //       per_page: state.per_page,
+        //     }
+        //   });
+        //   return;
+        // }
         Promise.all([
-          api.get("/artikel"),
+          api.get("/artikel?", { limit: state.per_page, page: state.page, ...state.filter }),
           api.get("/kategori"),
         ]).then((responses) => {
           const [artikel, kategori] = responses;
+          if (artikel.data.length === 0) {
+            commit({ type: "EMPTY" });
+            return;
+          }
+
           commit({
             type: "SUCCESS", payload: {
               artikel: artikel.data,
               kategori: kategori.data,
+              total_pages: artikel.total_pages,
+              per_page: artikel.per_page,
+              total_data: artikel.total_data,
             }
           });
         }).catch((error) => {
@@ -194,7 +303,7 @@ export const ArtikelProvider = ({ children }: { children: React.ReactNode }) => 
         break;
       }
     }
-  }, [state.data, state.slug, state.tag]);
+  }, [state.data, state.filter, state.filter?.kategori, state.page, state.per_page, state.slug, state.tag, state.total_pages]);
 
   return (
     <ArtikelContext.Provider value={artikelProvider}>

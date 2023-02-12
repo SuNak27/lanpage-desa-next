@@ -8,6 +8,7 @@ type ActiveLinkProps = {
   href: string
   as?: string
   className?: string
+  onClick?: () => void
 }
 
 const ActiveLink = ({ children, activeClassName, ...props }: ActiveLinkProps) => {

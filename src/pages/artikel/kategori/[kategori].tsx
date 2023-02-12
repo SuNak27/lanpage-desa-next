@@ -5,12 +5,22 @@ import Header from "@/layout/header"
 import parse from 'html-react-parser';
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
 export default function Artikel() {
   const { state, commit } = useArtikelContext()
+  const [kategori, setKategori] = useState<string | null>(null)
   const router = useRouter()
+
+  const convertString = (string: string) => {
+    return string
+      .replace(/-/g, ' ')
+      .replace(/oe/g, 'ö')
+      .replace(/ae/g, 'ä')
+      .replace(/ue/g, 'ü')
+      .replace(/\w\S*/g, (txt: string) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+  };
 
   function onClickNextPage() {
     commit({ type: "NEXT_PAGE" })
@@ -21,14 +31,17 @@ export default function Artikel() {
   }
 
   useEffect(() => {
-    commit({ type: "FETCH" })
+    if (router.query.kategori) {
+      setKategori(router.query.kategori as string)
+      commit({ type: "FILTER", payload: { kategori: router.query.kategori as string } })
+    }
   }, [commit, router.query.kategori])
   return (
     <>
-      <Header title="Artikel" />
+      <Header title={convertString(kategori ?? '')} />
       <div className="p-4 rounded-3">
         <div className="row g-4 overflow-hidden mb-5">
-          {state.tag !== 'success' && (
+          {state.tag === 'loading' && (
             [1, 2, 3, 4, 5].map((item, index) => (
               <div className="col-12" key={index}>
                 <div className="card overflow-hidden w-100 shadow border-0">
@@ -50,6 +63,19 @@ export default function Artikel() {
               </div>
             ))
           )}
+          {state.tag === 'empty' && (
+            <div className="col-12">
+              <div className="card overflow-hidden w-100 shadow border-0">
+                <div className="row g-0">
+                  <div className="card-body position-relative col-md-12">
+                    <h5 className="card-title fw-semibold truncate mt-3">
+                      Tidak ada artikel
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {state.data?.artikel.map((item, index) => (
             <div className="col-12" key={index}>
               <div className="card overflow-hidden w-100 shadow border-0">
@@ -61,7 +87,7 @@ export default function Artikel() {
                       className="img-fluid img-berita-lg" alt="Berita" />
                   </div>
                   <div className="card-body position-relative col-md-6">
-                    <div className="btn btn-sm btn-primary">
+                    <h6 className="btn btn-sm btn-primary">
                       <span className="d-flex gap-2">
                         <i className="bi bi-calendar"></i>
                         {new Date(item.created_at).toLocaleDateString("id-ID", {
@@ -71,8 +97,7 @@ export default function Artikel() {
                           day: "numeric"
                         })}
                       </span>
-
-                    </div>
+                    </h6>
                     <h5 className="card-title fw-semibold truncate mt-3">
                       <Link href={`/artikel/${item.slug}`} className="text-decoration-none title-artikel text-dark"
                       >{item.judul}</Link>
@@ -80,10 +105,10 @@ export default function Artikel() {
                     <div className="card-text truncate-2">
                       {parse(item.isi.substring(0, 150))}
                     </div>
-                    <Link href={`/artikel/${item.slug}`} className="text-decoration-none fw-semibold">
+                    <a href="/berita/" className="text-decoration-none fw-semibold">
                       Baca selengkapnya
                       <i className="bi bi-arrow-right ms-1"></i>
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -91,9 +116,11 @@ export default function Artikel() {
           ))}
 
           <div className="col-12">
-            <div className="d-flex justify-content-center">
-              <Pagination page={state.page} total_pages={state.total_pages} onClickNext={onClickNextPage} onClickPrev={onClickPrevPage} onClickPage={(page) => commit({ type: "SET_PAGE", payload: page })} />
-            </div>
+            {state.tag === 'success' && state.data?.artikel.length > 0 && (
+              <div className="d-flex justify-content-center">
+                <Pagination page={state.page} total_pages={state.total_pages} onClickNext={onClickNextPage} onClickPrev={onClickPrevPage} onClickPage={(page) => commit({ type: "SET_PAGE", payload: page })} />
+              </div>
+            )}
           </div>
         </div>
       </div>
