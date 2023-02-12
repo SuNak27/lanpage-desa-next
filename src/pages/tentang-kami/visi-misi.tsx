@@ -1,9 +1,13 @@
 import AboutLayout, { useAboutContext } from "@/layout/about"
 import Header from "@/layout/header"
+import { useEffect } from "react"
 import Skeleton from "react-loading-skeleton"
 
 export default function VisiMisi() {
-  const { state } = useAboutContext()
+  const { state, commit } = useAboutContext()
+  useEffect(() => {
+    commit({ type: 'FETCH' })
+  }, [commit])
   return (
     <>
       <Header title="Visi Misi" />
