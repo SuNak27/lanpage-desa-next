@@ -25,7 +25,6 @@ export default function DetailArtikel() {
 
   useEffect(() => {
     if (query.slug) {
-      console.log(state, 'state');
       commit({ type: "FETCH_DETAIL", payload: slug });
     }
   }, [commit, query.slug, slug, state, state.tag])

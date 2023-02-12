@@ -95,7 +95,7 @@ export default function Navbar() {
               </ul>
             </li>
             <li className="nav-item">
-              <ActiveLink activeClassName="active" className="nav-link" href="/artikel">
+              <ActiveLink activeClassName="active" exactactiveclassname="active" className="nav-link" href="/artikel">
                 Artikel
               </ActiveLink>
             </li>

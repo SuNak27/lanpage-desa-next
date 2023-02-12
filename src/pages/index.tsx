@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import parse from 'html-react-parser'
 import Gambar from "@/component/Image";
 import Header from "@/layout/header";
+import Link from "next/link";
 
 export default function Home() {
   const { state, dispatch } = useLayoutContext()
@@ -67,9 +68,9 @@ export default function Home() {
                             <div className="card-text">
                               {parse(item.isi.substring(0, 400))}
                             </div>
-                            <a href="#" className="text-decoration-none">
+                            <Link href={`/artikel/${item.slug}`} className="text-decoration-none">
                               Selengkapnya <i className="bi bi-arrow-right"></i>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </SwiperSlide>

@@ -10,7 +10,6 @@ import Skeleton from "react-loading-skeleton";
 
 export default function Artikel() {
   const { state, commit } = useArtikelContext()
-  console.log(state);
   useEffect(() => {
     commit({ type: "FETCH" });
   }, [commit])
