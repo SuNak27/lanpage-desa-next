@@ -204,6 +204,9 @@ export const reducer = (state: State, action: Action): State => {
         case "FETCH": {
           return { ...state, tag: "loading" };
         }
+        case "FETCH_DETAIL": {
+          return { ...state, tag: "detail", slug: action.payload };
+        }
         default: {
           return state;
         }

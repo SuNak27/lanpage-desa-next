@@ -1,4 +1,5 @@
 import Gambar from "@/component/Image";
+import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import { useLayoutContext } from "../default";
 import SideArtikelLayout from "./SideScreen";
@@ -14,12 +15,12 @@ export default function MainStatistikLayout({ children }: { children: React.Reac
           </div>
           <div className="col-md-4">
             <div className="position-sticky" style={{ top: '6em' }}>
-              <form className="d-lg-flex d-none" role="search" action="/berita">
+              {/* <form className="d-lg-flex d-none" role="search" action="/berita">
                 <input className="form-control me-2" type="search" placeholder="Cari Berita...." aria-label="Search" name="search" />
                 <button className="btn btn-outline-primary" type="submit">
                   Search
                 </button>
-              </form>
+              </form> */}
 
               <div className="mt-4">
                 <h3 className="fw-bolder my-4">Berita Terbaru</h3>
@@ -47,7 +48,7 @@ export default function MainStatistikLayout({ children }: { children: React.Reac
                         className="rounded"
                       />
                     </div>
-                    <a href="" className="p-2 text-decoration-none" style={{ width: '70%', color: 'black' }}>
+                    <Link href={`/artikel/${item.slug}`} className="p-2 text-decoration-none" style={{ width: '70%', color: 'black' }}>
                       <h3 className="fs-6 fw-semibold">
                         {item.judul.length > 25 ? item.judul.substring(0, 25) + '...' : item.judul}
                       </h3>
@@ -60,7 +61,7 @@ export default function MainStatistikLayout({ children }: { children: React.Reac
                           })}
                         </span>
                       </p>
-                    </a>
+                    </Link>
                   </div>
                 ))}
               </div>

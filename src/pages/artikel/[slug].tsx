@@ -27,7 +27,8 @@ export default function DetailArtikel() {
     if (query.slug) {
       commit({ type: "FETCH_DETAIL", payload: slug });
     }
-  }, [commit, query.slug, slug, state, state.tag])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query.slug])
 
   return (
     <>
