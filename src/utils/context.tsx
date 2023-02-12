@@ -1,12 +1,15 @@
 import { createContext, useContext, useEffect, useReducer, useState } from "react";
 import Swal from "sweetalert2";
 import { api } from "./apiService";
-import { InfoDesa, MasterData, Data } from "./dataInterface";
+import { Data, InfoDesa, MasterData } from "./dataInterface";
 
 type State = {
   tag: "idle" | "loading" | "success" | "error" | "empty";
   title: string;
-  data: Data | null;
+  data: {
+    master_data: MasterData | null;
+    info_desa: InfoDesa | null;
+  };
   errorMessage: string;
 }
 
@@ -17,7 +20,12 @@ type ContextType = {
 
 type Action =
   | { type: "FETCH" }
-  | { type: "SUCCESS"; payload: Data }
+  | {
+    type: "SUCCESS"; payload: {
+      master_data: MasterData;
+      info_desa: InfoDesa;
+    }
+  }
   | { type: "ERROR"; payload: string }
   | { type: "CHANGE_TITLE"; payload: string }
   | { type: "EMPTY" };
@@ -26,7 +34,10 @@ export const Context = createContext<ContextType>({
   state: {
     tag: "idle",
     title: "Beranda",
-    data: null,
+    data: {
+      master_data: null,
+      info_desa: null,
+    },
     errorMessage: "",
   },
   commit() { },
@@ -36,7 +47,10 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
   const initialState: State = {
     tag: "idle",
     title: "Beranda",
-    data: null,
+    data: {
+      master_data: null,
+      info_desa: null,
+    },
     errorMessage: "",
   };
 
@@ -65,19 +79,10 @@ export const ContextProvider = ({ children }: { children: React.ReactNode }) => 
       case "loading": {
         switch (action.type) {
           case "SUCCESS": {
-            const prevState = state.data;
-            const newState = action.payload;
-            const mergedData = {
-              ...prevState,
-              ...newState,
-            };
-
-            console.log(action.payload, "action.payload");
-
             return {
               ...state,
               tag: "success",
-              data: mergedData,
+              data: action.payload,
             };
           }
           case "EMPTY": {

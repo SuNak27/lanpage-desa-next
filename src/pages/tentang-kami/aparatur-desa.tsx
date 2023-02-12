@@ -1,12 +1,9 @@
-import Layout from "@/layout"
-import AboutLayout from "@/layout/about"
+import AboutLayout, { useAboutContext } from "@/layout/about"
 import Header from "@/layout/header"
-import { ContextProvider, useAppContext } from "@/utils/context"
-import { useContext } from "react"
 import Skeleton from "react-loading-skeleton"
 
 export default function AparaturDesa() {
-  const { state } = useAppContext()
+  const { state } = useAboutContext()
   return (
     <>
       <Header title="Aparatur Desa" />
@@ -34,7 +31,7 @@ export default function AparaturDesa() {
                     </tr>
                   ))
                 )}
-                {state.data?.tentang_kami?.desa_struktural.map((item, index) => (
+                {state.data?.desa_struktural.map((item, index) => (
                   <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>
                     <td>{item.nip}</td>
@@ -53,12 +50,8 @@ export default function AparaturDesa() {
 
 AparaturDesa.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <ContextProvider>
-      <Layout>
-        <AboutLayout>
-          {page}
-        </AboutLayout>
-      </Layout>
-    </ContextProvider>
+    <AboutLayout>
+      {page}
+    </AboutLayout>
   )
 }

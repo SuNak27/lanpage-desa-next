@@ -1,43 +1,13 @@
 import ActiveLink from "@/component/ActiveLink";
-import { api } from "@/utils/apiService";
-import { ContextProvider, useAppContext } from "@/utils/context";
-// import { useAppContext } from "@/utils/context";
 import { useEffect } from "react";
+import { useLayoutContext } from "./../default";
+import { AboutProvider } from "./AboutScreen.machine";
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {
-  const { commit, state } = useAppContext();
+  const { dispatch } = useLayoutContext();
   useEffect(() => {
-    if (state.data?.tentang_kami) {
-      return;
-    }
-
-    commit({ type: "FETCH" });
-    switch (state.tag) {
-      case "idle":
-        commit({ type: "FETCH" });
-        break;
-      case "loading":
-        api.get("/tentang-kami")
-          .then((res) => {
-            commit({
-              type: "SUCCESS",
-              payload: {
-                tentang_kami: res.data,
-              },
-            });
-          })
-          .catch((err) => {
-            commit({
-              type: "ERROR",
-              payload: err.message,
-            });
-          });
-        break;
-      default:
-        break;
-    }
-
-  }, [commit, state.data?.tentang_kami, state.tag])
+    dispatch({ type: "FETCH" })
+  }, [dispatch])
   return (
     <>
       <div className="container m-5 p-5">
@@ -61,12 +31,14 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
           <div className="col-lg-9">
             <div className="row">
               <div className="col-lg-12">
-                {children}
+                <AboutProvider>
+                  <main>{children}</main>
+                </AboutProvider>
               </div>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }

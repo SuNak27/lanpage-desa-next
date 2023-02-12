@@ -1,47 +1,21 @@
-/* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper";
-import Header from "@/layout/header";
-import { useAppContext } from "@/utils/context";
-import parse from 'html-react-parser'
+import { useLayoutContext } from "@/layout/default";
 import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
+import { Autoplay, Navigation, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import parse from 'html-react-parser'
+import Gambar from "@/component/Image";
+import Header from "@/layout/header";
 
 export default function Home() {
-  const { state, commit } = useAppContext();
-  function image(image: string) {
-    if (image !== "") {
-      return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img alt="image" src={process.env.NEXT_PUBLIC_IMAGE_URL + image ?? ''} className="img-news rounded-4" style={{
-          objectFit: 'cover',
-          width: '100%',
-          height: '150px'
-        }} />
-      );
-    } else {
-      return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img alt="image" width={300} height={150} src={'/assets/images/no-image.png'} className="img-news rounded-4" style={{
-          objectFit: 'cover',
-          width: '100%',
-          height: '150px'
-        }} />
-      );
-    }
-  }
-
+  const { state, dispatch } = useLayoutContext()
   useEffect(() => {
-    if (state.data?.info_desa || state.data?.master_data) {
-      return
-    };
-    commit({ type: 'FETCH' })
+    dispatch({ type: "FETCH" })
+  }, [dispatch])
 
-  }, [commit, state.data?.info_desa, state.data?.master_data])
   return (
     <>
-      <Header title={'Beranda'}></Header>
+      <Header title="Beranda" />
       <section className="news position-relative">
         <div className="container">
           <div className="row">
@@ -81,14 +55,16 @@ export default function Home() {
                         </div>
                       </div>
                     )}
-                    {state.data?.info_desa?.artikel?.map((item, index) => (
-                      <SwiperSlide key={index} className="mb-5">
+
+                    {state.data.info_desa?.artikel?.map((item, index) => (
+                      <SwiperSlide key={index}>
                         <div className="card-body row mb-4">
-                          <div className="col-3">{image(item.gambar ?? '')}</div>
+                          <div className="col-3">
+                            <Gambar image={item.gambar ?? ''} width={250} height={150} tag='img' />
+                          </div>
                           <div className="col-9">
                             <h5 className="card-title">{item.judul}</h5>
                             <div className="card-text">
-                              {/* {item.isi.substring(0, 400)}... */}
                               {parse(item.isi.substring(0, 400))}
                             </div>
                             <a href="#" className="text-decoration-none">
@@ -188,6 +164,7 @@ export default function Home() {
           ></path>
         </svg>
       </div>
+
       <section className="aparat text-white">
         <div className="container py-6">
           <div className="d-flex justify-content-between align-items-center flex-wrap">
@@ -226,7 +203,6 @@ export default function Home() {
                     <Skeleton width={200} height={200} circle className="mb-3" />
                     <Skeleton width={'40%'} height={20} count={2} />
                   </div>
-
                 </SwiperSlide>
               ))
             )}
@@ -237,7 +213,15 @@ export default function Home() {
                     className="octagon mx-auto mb-3 d-flex bg-success"
                     style={{ width: 200, height: 200 }}
                   >
-                    <img width={300} height={300} alt="foto" src={'https://picsum.photos/200/200'} />
+                    {/* <img width={300} height={300} alt="foto" src={'https://picsum.photos/200/200'} /> */}
+                    <Gambar
+                      image="https://picsum.photos/300/300"
+                      height={300}
+                      width={300}
+                      className="img-fluid"
+                      type="link"
+                      tag="img"
+                    />
                   </div>
                   <div className="mb-0">
                     <a
@@ -256,6 +240,7 @@ export default function Home() {
           </Swiper>
         </div>
       </section>
+
       <div className="landing-curve">
         <svg
           viewBox="15 12 1470 48"
@@ -273,12 +258,12 @@ export default function Home() {
         <div className="container py-6">
           <div className="row align-items-center justify-content-between">
             <div className="col-lg-5 mb-lg-0 mb-5">
-              <Image
-                src="https://picsum.photos/500/300"
-                alt="Online Articles"
-                width={500}
+              <Gambar
+                image="https://picsum.photos/500/300"
                 height={300}
+                width={500}
                 className="img-fluid rounded-5"
+                type="link"
               />
             </div>
             <div className="col-lg-7">
@@ -343,11 +328,9 @@ export default function Home() {
 
       <section className="map">
         <div className="p-0 m-0">
-          {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.7499959945194!2d113.4958403143558!3d-7.709953678511709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd703f599489a1b%3A0xf34d3ceb3f9ddf2c!2sUniversitas%20Nurul%20Jadid!5e0!3m2!1sid!2sid!4v1675631267104!5m2!1sid!2sid" width="100%" height="450" style={{ border: 0 }} allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe> */}
-
           {parse(state.data?.master_data?.map_desa ?? '')}
         </div>
       </section>
     </>
-  );
+  )
 }
