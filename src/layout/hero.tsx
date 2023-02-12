@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { Context, useAppContext } from "@/utils/context";
 import ActiveLink from "@/component/ActiveLink";
 import Skeleton from "react-loading-skeleton";
+import { useLayoutContext } from "./default";
 
 type PathArray = {
   breadcrumb: string;
@@ -19,7 +20,7 @@ export default function Hero() {
     "/assets/images/2.jpg",
   ];
   const router = useRouter();
-  const { state } = useAppContext();
+  const { state } = useLayoutContext();
   const [breadcrumbs, setBreadcrumbs] = useState<PathArray>();
   useEffect(() => {
     if (router) {

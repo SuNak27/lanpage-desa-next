@@ -1,22 +1,19 @@
-import Layout from "@/layout"
 import Header from "@/layout/header"
-import StatistikLayout from "@/layout/statistik"
-import { ContextProvider, useAppContext } from "@/utils/context"
-import { useContext } from "react"
+import StatistikLayout, { useStatistikContext } from "@/layout/statistik"
+import { useEffect } from "react"
 import { Pie } from "react-chartjs-2"
 import Skeleton from "react-loading-skeleton"
 
 export default function Statistik() {
-  const { state } = useAppContext()
+  const { state, commit } = useStatistikContext()
 
-  // Dummy Data
   const chartData = {
-    labels: state.data?.statistik?.umur.data.map((umur) => {
+    labels: state.data?.umur.data.map((umur) => {
       return `${umur.rentang_umur} Tahun`
     }),
     datasets: [
       {
-        data: state.data?.statistik?.umur.data.map((umur) => umur.jumlah_penduduk),
+        data: state.data?.umur.data.map((umur) => umur.jumlah_penduduk),
         label: "Jumlah Penduduk",
         backgroundColor: [
           "#FF6384",
@@ -46,7 +43,9 @@ export default function Statistik() {
     },
   }
 
-
+  useEffect(() => {
+    commit({ type: "FETCH" })
+  }, [commit])
   return (
     <>
       <Header title="Statistik Umur" />
@@ -97,7 +96,7 @@ export default function Statistik() {
                     </tr>
                   ))
                 )}
-                {state.data?.statistik?.umur.data.map((umur, index) => (
+                {state.data?.umur.data.map((umur, index) => (
                   <tr key={index}>
                     <th scope="row" className="text-center">{index + 1}</th>
                     <td>
@@ -140,22 +139,22 @@ export default function Statistik() {
                   <td>
                     <div className="d-flex justify-content-between">
                       <div>
-                        <strong>{state.data?.statistik?.umur.jumlah_penduduk} Penduduk</strong>
+                        <strong>{state.data?.umur.jumlah_penduduk} Penduduk</strong>
                       </div>
                       <div>
-                        <span className="badge bg-primary"><strong>{state.data?.statistik?.umur.persen_penduduk}%</strong></span>
+                        <span className="badge bg-primary"><strong>{state.data?.umur.persen_penduduk}%</strong></span>
                       </div>
                     </div>
                   </td>
                   <td>
                     <div className="d-flex justify-content-between">
                       <div>
-                        <strong>{state.data?.statistik?.umur.jumlah_penduduk_laki_laki} Penduduk</strong>
+                        <strong>{state.data?.umur.jumlah_penduduk_laki_laki} Penduduk</strong>
                       </div>
                       <div>
                         <span className="badge bg-primary">
                           <strong>
-                            {state.data?.statistik?.umur?.persen_penduduk_laki_laki}%
+                            {state.data?.umur?.persen_penduduk_laki_laki}%
                           </strong>
                         </span>
                       </div>
@@ -165,13 +164,13 @@ export default function Statistik() {
                     <div className="d-flex justify-content-between">
                       <div>
                         <strong>
-                          {state.data?.statistik?.umur?.jumlah_penduduk_perempuan} Penduduk
+                          {state.data?.umur?.jumlah_penduduk_perempuan} Penduduk
                         </strong>
                       </div>
                       <div>
                         <span className="badge bg-primary">
                           <strong>
-                            {state.data?.statistik?.umur?.persen_penduduk_perempuan}%
+                            {state.data?.umur?.persen_penduduk_perempuan}%
                           </strong>
                         </span>
                       </div>
@@ -189,12 +188,8 @@ export default function Statistik() {
 
 Statistik.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <ContextProvider>
-      <Layout>
-        <StatistikLayout>
-          {page}
-        </StatistikLayout>
-      </Layout>
-    </ContextProvider>
+    <StatistikLayout>
+      {page}
+    </StatistikLayout>
   )
 }

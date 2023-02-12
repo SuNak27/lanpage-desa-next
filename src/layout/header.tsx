@@ -1,18 +1,18 @@
-import { useAppContext } from "@/utils/context";
 import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
+import { useLayoutContext } from "./default";
 
 type Props = {
   title?: string;
 };
 
 export default function Header(props: Props) {
-  const { state, commit } = useAppContext();
+  const { state, dispatch } = useLayoutContext();
   const title = `${state.title} | ${process.env.NEXT_PUBLIC_APP_NAME}`;
 
   useEffect(() => {
-    commit({ type: "CHANGE_TITLE", payload: props.title ?? "Beranda" });
-  }, [commit, props.title]);
+    dispatch({ type: "CHANGE_TITLE", payload: props.title ?? "Beranda" });
+  }, [dispatch, props.title]);
 
   return (
     <Head>

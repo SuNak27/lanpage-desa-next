@@ -1,12 +1,9 @@
-import Layout from "@/layout"
-import AboutLayout from "@/layout/about"
+import AboutLayout, { useAboutContext } from "@/layout/about"
 import Header from "@/layout/header"
-import { ContextProvider, useAppContext } from "@/utils/context"
-import { useContext } from "react"
 import Skeleton from "react-loading-skeleton"
 
 export default function VisiMisi() {
-  const { state } = useAppContext()
+  const { state } = useAboutContext()
   return (
     <>
       <Header title="Visi Misi" />
@@ -20,7 +17,7 @@ export default function VisiMisi() {
               </>
             )}
             <p className="text-justify">
-              {state.data?.tentang_kami?.visi}
+              {state.data?.visi}
             </p>
           </div>
         </div>
@@ -33,7 +30,7 @@ export default function VisiMisi() {
                 <Skeleton height={20} count={5} />
               </>
             )}
-            {state.data?.tentang_kami?.misi}
+            {state.data?.misi}
           </div>
         </div>
       </div>
@@ -43,12 +40,8 @@ export default function VisiMisi() {
 
 VisiMisi.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <ContextProvider>
-      <Layout>
-        <AboutLayout>
-          {page}
-        </AboutLayout>
-      </Layout>
-    </ContextProvider>
+    <AboutLayout>
+      {page}
+    </AboutLayout>
   )
 }

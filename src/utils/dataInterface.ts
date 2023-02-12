@@ -28,7 +28,7 @@ type Faq = {
   jawaban: string,
 }
 
-type Kategori = {
+export type Kategori = {
   id_kategori: number,
   nama_kategori: string,
   slug: string,

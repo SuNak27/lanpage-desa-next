@@ -1,11 +1,13 @@
-import Layout from "@/layout"
-import AboutLayout from "@/layout/about"
+import AboutLayout, { useAboutContext } from "@/layout/about"
 import Header from "@/layout/header"
-import { ContextProvider, useAppContext } from "@/utils/context"
+import { useEffect } from "react"
 import Skeleton from "react-loading-skeleton"
 
 export default function About() {
-  const { state } = useAppContext()
+  const { state, commit } = useAboutContext()
+  useEffect(() => {
+    commit({ type: 'FETCH' })
+  }, [commit])
   return (
     <>
       <Header title="Tentang Kami" />
@@ -20,7 +22,7 @@ export default function About() {
               </>
             )}
             <p>
-              {state.data?.tentang_kami?.profil_desa}
+              {state.data?.profil_desa}
             </p>
           </div>
         </div>
@@ -31,12 +33,8 @@ export default function About() {
 
 About.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <ContextProvider>
-      <Layout>
-        <AboutLayout>
-          {page}
-        </AboutLayout>
-      </Layout>
-    </ContextProvider>
+    <AboutLayout>
+      {page}
+    </AboutLayout>
   )
 }

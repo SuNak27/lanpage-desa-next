@@ -1,14 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import Layout from "@/layout"
-import ArtikelLayout from "@/layout/artikel"
+import ArtikelLayout, { useArtikelContext } from "@/layout/artikel"
 import Header from "@/layout/header"
 import { ContextProvider, useAppContext } from "@/utils/context"
 import parse from 'html-react-parser';
 import Link from "next/link";
+import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 
 export default function Artikel() {
-  const { state } = useAppContext()
+  const { state, commit } = useArtikelContext()
+  console.log(state);
+  useEffect(() => {
+    commit({ type: "FETCH" });
+  }, [commit])
   return (
     <>
       <Header title="Artikel" />
@@ -36,7 +41,7 @@ export default function Artikel() {
               </div>
             ))
           )}
-          {state.data?.artikel?.map((item, index) => (
+          {state.data?.artikel.map((item, index) => (
             <div className="col-12" key={index}>
               <div className="card overflow-hidden w-100 shadow border-0">
                 <div className="row g-0">
@@ -63,7 +68,6 @@ export default function Artikel() {
                       >{item.judul}</Link>
                     </h5>
                     <div className="card-text truncate-2">
-                      {/* {parse(item.isi)} */}
                       {parse(item.isi.substring(0, 150))}
                     </div>
                     <a href="/berita/" className="text-decoration-none fw-semibold">
@@ -83,12 +87,8 @@ export default function Artikel() {
 
 Artikel.getLayout = function getLayout(page: React.ReactNode) {
   return (
-    <ContextProvider>
-      <Layout>
-        <ArtikelLayout>
-          {page}
-        </ArtikelLayout>
-      </Layout>
-    </ContextProvider>
+    <ArtikelLayout>
+      {page}
+    </ArtikelLayout>
   )
 }

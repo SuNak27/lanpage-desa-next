@@ -1,41 +1,13 @@
 import ActiveLink from "@/component/ActiveLink";
-import { api } from "@/utils/apiService";
-import { useAppContext } from "@/utils/context";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useLayoutContext } from "../default";
+import { StatistikProvider } from "./StatistikScreen.machine";
 
 export default function StatistikLayout({ children }: { children: React.ReactNode }) {
-  const { state, commit } = useAppContext()
+  const { dispatch } = useLayoutContext();
   useEffect(() => {
-    if (state.data?.statistik) {
-      return
-    }
-
-    commit({ type: "FETCH" })
-    switch (state.tag) {
-      case "idle":
-        commit({ type: "FETCH" })
-        break
-      case "loading":
-        api.get("/statistik")
-          .then((res) => {
-            commit({
-              type: "SUCCESS",
-              payload: {
-                statistik: res.data
-              }
-            })
-          })
-          .catch((err) => {
-            commit({
-              type: "ERROR",
-              payload: err.message
-            })
-          })
-        break
-      default:
-        break
-    }
-  }, [state.tag])
+    dispatch({ type: "FETCH" })
+  }, [dispatch])
   return (
     <>
       <div className="container m-5 p-5">
@@ -60,7 +32,9 @@ export default function StatistikLayout({ children }: { children: React.ReactNod
           <div className="col-lg-9">
             <div className="row">
               <div className="col-lg-12">
-                {children}
+                <StatistikProvider>
+                  {children}
+                </StatistikProvider>
               </div>
             </div>
           </div>
