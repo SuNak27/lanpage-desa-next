@@ -3,17 +3,21 @@ import { Artikel, Kategori } from "@/utils/dataInterface";
 import { createContext, useContext, useEffect, useReducer } from "react";
 
 type State = {
-  tag: "idle" | "loading" | "success" | "error" | "empty";
+  tag: "idle" | "loading" | "success" | "error" | "empty" | "detail" | "success_detail";
   data: {
     artikel: Artikel[];
     kategori: Kategori[];
+    detail_artikel?: Artikel;
   };
+  slug?: string;
   errorMessage: string;
 }
 
 type Action =
   | { type: "FETCH" }
+  | { type: "FETCH_DETAIL"; payload: string }
   | { type: "SUCCESS"; payload: { artikel: Artikel[], kategori: Kategori[] } }
+  | { type: "SUCCESS_DETAIL"; payload: Artikel }
   | { type: "ERROR"; payload: string }
   | { type: "EMPTY" };
 
@@ -50,6 +54,27 @@ export const reducer = (state: State, action: Action): State => {
         case "FETCH": {
           return { ...state, tag: "loading" };
         }
+        case "FETCH_DETAIL": {
+          return { ...state, tag: "detail", slug: action.payload };
+        }
+        default: {
+          return state;
+        }
+      }
+    }
+    case "detail": {
+      switch (action.type) {
+        case "SUCCESS_DETAIL": {
+          return {
+            ...state, tag: "success_detail", data: {
+              ...state.data,
+              detail_artikel: action.payload,
+            }
+          };
+        }
+        case "ERROR": {
+          return { ...state, tag: "error", errorMessage: action.payload };
+        }
         default: {
           return state;
         }
@@ -74,6 +99,19 @@ export const reducer = (state: State, action: Action): State => {
       }
     }
     case "success": {
+      switch (action.type) {
+        case "FETCH": {
+          return { ...state, tag: "loading" };
+        }
+        case "FETCH_DETAIL": {
+          return { ...state, tag: "detail", slug: action.payload };
+        }
+        default: {
+          return state;
+        }
+      }
+    }
+    case "success_detail": {
       switch (action.type) {
         case "FETCH": {
           return { ...state, tag: "loading" };
@@ -118,6 +156,14 @@ export const ArtikelProvider = ({ children }: { children: React.ReactNode }) => 
 
   useEffect(() => {
     switch (state.tag) {
+      case "detail": {
+        api.get(`/artikel/${state.slug}`).then((response) => {
+          commit({ type: "SUCCESS_DETAIL", payload: response.data });
+        }).catch((error) => {
+          commit({ type: "ERROR", payload: error.message });
+        });
+        break;
+      }
       case "loading": {
         if (state.data.artikel.length > 0 && state.data.kategori.length > 0) {
           commit({
@@ -148,7 +194,7 @@ export const ArtikelProvider = ({ children }: { children: React.ReactNode }) => 
         break;
       }
     }
-  }, [state.data, state.tag]);
+  }, [state.data, state.slug, state.tag]);
 
   return (
     <ArtikelContext.Provider value={artikelProvider}>

@@ -1,16 +1,10 @@
 import Gambar from "@/component/Image";
-import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useLayoutContext } from "../default";
 import SideArtikelLayout from "./SideScreen";
 
 export default function MainStatistikLayout({ children }: { children: React.ReactNode }) {
   const Layout = useLayoutContext();
-  useEffect(() => {
-    Layout.dispatch({ type: 'FETCH' })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Layout.dispatch])
-
   return (
     <>
       <div className="container my-5">
