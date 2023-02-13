@@ -10,6 +10,10 @@ export default function SideArtikelLayout() {
   const Layout = useLayoutContext()
   const { state, commit } = useArtikelContext()
   const router = useRouter()
+
+  function onClick() {
+    commit({ type: 'ALL_KATEGORI' })
+  }
   return (
     <>
       <div className="mt-4">
@@ -19,7 +23,7 @@ export default function SideArtikelLayout() {
           <button className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center ${router.pathname == '/artikel' ? 'active' : ''}`} onClick={() => router.push('/artikel')}>
             Semua
             {router.pathname == '/artikel' &&
-              <span className="badge bg-primary rounded-pill">{state.total_data}</span>
+              <span className="badge bg-primary rounded-pill">{state.data.artikel.total_data}</span>
             }
           </button>
           {state.tag === 'loading' && (
@@ -30,17 +34,16 @@ export default function SideArtikelLayout() {
               </li>
             ))
           )}
-          {state.data?.kategori.map((item, index) => (
+          {state.data.kategori.data.map((item, index) => (
             <ActiveLink className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" key={index} activeClassName={"active"} href={`/artikel/kategori/${item.slug}`}>
               {item.nama_kategori}
               <Badge number={item.artikel?.length ?? 0} />
             </ActiveLink>
           ))}
-          <ActiveLink className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" activeClassName={"active"} href={`/kategori`}
-          >
+          <button className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onClick={() => onClick()}>
             Lihat Semua Kategori
             <i className="bi bi-arrow-right"></i>
-          </ActiveLink>
+          </button>
         </ul>
       </div>
     </>

@@ -14,7 +14,7 @@ export default function MainStatistikLayout({ children }: { children: React.Reac
             {children}
           </div>
           <div className="col-md-4">
-            <div className="position-sticky" style={{ top: '6em' }}>
+            <div className="position-sticky sidebar-berita" style={{ top: '6em' }}>
               {/* <form className="d-lg-flex d-none" role="search" action="/berita">
                 <input className="form-control me-2" type="search" placeholder="Cari Berita...." aria-label="Search" name="search" />
                 <button className="btn btn-outline-primary" type="submit">

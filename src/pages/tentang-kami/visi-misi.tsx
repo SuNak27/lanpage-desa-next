@@ -15,10 +15,8 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Visi</h4>
         <div className="row">
           <div className="col-lg-12">
-            {state.tag !== 'success' && (
-              <>
-                <Skeleton height={20} count={5} />
-              </>
+            {state.tag === 'loading' && (
+              <Skeleton height={20} count={5} />
             )}
             <p className="text-justify">
               {state.data?.visi}
@@ -29,10 +27,8 @@ export default function VisiMisi() {
         <h4 className="fw-semibold mb-4">Misi</h4>
         <div className="row">
           <div className="col-lg-12">
-            {state.tag !== 'success' && (
-              <>
-                <Skeleton height={20} count={5} />
-              </>
+            {state.tag === 'loading' && (
+              <Skeleton height={20} count={5} />
             )}
             {state.data?.misi}
           </div>

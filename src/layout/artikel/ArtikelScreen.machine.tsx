@@ -5,14 +5,22 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 type State = {
   tag: "idle" | "loading" | "success" | "error" | "empty" | "detail" | "success_detail";
   data: {
-    artikel: Artikel[];
-    kategori: Kategori[];
+    artikel: {
+      data: Artikel[];
+      page: number;
+      total_data: number;
+      total_pages: number;
+      per_page: number;
+    };
+    kategori: {
+      data: Kategori[];
+      page: number;
+      total_data: number;
+      total_pages: number;
+      per_page: number;
+    };
     detail_artikel?: Artikel;
   };
-  page: number;
-  per_page: number;
-  total_pages: number;
-  total_data: number;
   slug?: string;
   errorMessage: string;
   filter?: {
@@ -26,11 +34,19 @@ type Action =
   | { type: "FETCH_DETAIL"; payload: string }
   | {
     type: "SUCCESS"; payload: {
-      artikel: Artikel[],
-      kategori: Kategori[],
-      total_pages: number,
-      per_page: number,
-      total_data: number,
+      artikel: {
+        data: Artikel[],
+        total_data: number,
+        total_pages: number,
+        per_page: number,
+        page: number,
+      },
+      kategori: {
+        data: Kategori[],
+        total_data: number,
+        total_pages: number,
+        per_page: number,
+      },
       filter?: {
         kategori?: string,
         search?: string,
@@ -42,6 +58,7 @@ type Action =
   | { type: "SET_PAGE"; payload: number }
   | { type: "FILTER"; payload: { kategori?: string, search?: string } }
   | { type: "SUCCESS_DETAIL"; payload: Artikel }
+  | { type: "ALL_KATEGORI" }
   | { type: "ERROR"; payload: string }
   | { type: "EMPTY" };
 
@@ -54,13 +71,21 @@ export const ArtikelContext = createContext<ArtikelContextType>({
   state: {
     tag: "idle",
     data: {
-      artikel: [],
-      kategori: [],
+      artikel: {
+        data: [],
+        page: 1,
+        total_data: 0,
+        total_pages: 0,
+        per_page: 10,
+      },
+      kategori: {
+        data: [],
+        page: 1,
+        total_data: 0,
+        total_pages: 0,
+        per_page: 10,
+      }
     },
-    page: 1,
-    per_page: 10,
-    total_pages: 0,
-    total_data: 0,
     errorMessage: "",
     filter: {
       kategori: undefined,
@@ -73,14 +98,22 @@ export const ArtikelContext = createContext<ArtikelContextType>({
 const initialState: State = {
   tag: "idle",
   data: {
-    artikel: [],
-    kategori: [],
+    artikel: {
+      data: [],
+      page: 1,
+      total_data: 0,
+      total_pages: 0,
+      per_page: 10,
+    },
+    kategori: {
+      data: [],
+      page: 1,
+      total_data: 0,
+      total_pages: 0,
+      per_page: 10,
+    },
   },
-  page: 1,
-  total_pages: 0,
-  total_data: 0,
   errorMessage: "",
-  per_page: 10,
 };
 
 export const reducer = (state: State, action: Action): State => {
@@ -90,22 +123,38 @@ export const reducer = (state: State, action: Action): State => {
         case "FETCH": {
           return {
             data: {
-              artikel: [],
-              kategori: [],
+              artikel: {
+                data: [],
+                page: state.data.artikel.page,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
+              kategori: {
+                data: [],
+                page: 1,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
             },
             tag: "loading",
-            page: 1,
-            total_pages: 0,
-            total_data: 0,
             errorMessage: "",
-            per_page: 10,
           };
         }
         case "FETCH_DETAIL": {
           return { ...state, tag: "detail", slug: action.payload };
         }
         case "FILTER": {
-          return { ...state, tag: "loading", page: 1, filter: action.payload };
+          return {
+            ...state,
+            tag: "loading",
+            filter: action.payload,
+            data: {
+              ...state.data,
+              artikel: { ...state.data.artikel, page: 1 },
+            }
+          };
         }
         default: {
           return state;
@@ -134,13 +183,24 @@ export const reducer = (state: State, action: Action): State => {
       switch (action.type) {
         case "SUCCESS": {
           return {
-            ...state, tag: "success", data: {
-              artikel: action.payload.artikel,
-              kategori: action.payload.kategori,
+            ...state,
+            tag: "success",
+            data: {
+              artikel: {
+                data: action.payload.artikel.data,
+                page: state.data.artikel.page,
+                total_data: action.payload.artikel.total_data,
+                total_pages: action.payload.artikel.total_pages,
+                per_page: action.payload.artikel.per_page,
+              },
+              kategori: {
+                data: action.payload.kategori.data,
+                page: 1,
+                total_data: action.payload.kategori.total_data,
+                total_pages: action.payload.kategori.total_pages,
+                per_page: action.payload.kategori.per_page,
+              },
             },
-            total_pages: action.payload.total_pages,
-            per_page: action.payload.per_page,
-            total_data: action.payload.total_data,
           };
         }
         case "ERROR": {
@@ -151,8 +211,20 @@ export const reducer = (state: State, action: Action): State => {
             ...state,
             tag: "empty",
             data: {
-              artikel: [],
-              kategori: [],
+              artikel: {
+                data: [],
+                page: 1,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
+              kategori: {
+                data: [],
+                page: 1,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
             },
           };
         }
@@ -166,32 +238,78 @@ export const reducer = (state: State, action: Action): State => {
         case "FETCH": {
           return {
             data: {
-              artikel: [],
-              kategori: [],
+              artikel: {
+                data: [],
+                page: 1,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
+              kategori: {
+                data: [],
+                page: 1,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
             },
             tag: "loading",
-            page: 1,
-            total_pages: 0,
-            total_data: 0,
             errorMessage: "",
-            per_page: 10,
           };
         }
         case "FETCH_DETAIL": {
           return { ...state, tag: "detail", slug: action.payload };
         }
         case "NEXT_PAGE": {
-          return { ...state, page: state.page + 1, tag: "loading" };
+          return {
+            ...state,
+            tag: "loading",
+            data: {
+              ...state.data,
+              artikel: { ...state.data.artikel, page: state.data.artikel.page + 1 }
+            },
+          }
         }
         case "PREV_PAGE": {
-          return { ...state, page: state.page - 1, tag: "loading" };
+          return {
+            ...state,
+            tag: "loading",
+            data: {
+              ...state.data,
+              artikel: { ...state.data.artikel, page: state.data.artikel.page - 1 }
+            },
+          };
         }
         case "SET_PAGE": {
-          return { ...state, page: action.payload, tag: "loading" };
+          return {
+            ...state,
+            tag: "loading",
+            data: {
+              ...state.data,
+              artikel: { ...state.data.artikel, page: action.payload }
+            },
+          };
         }
         case "FILTER": {
           return {
-            ...state, tag: "loading", page: 1, filter: action.payload
+            ...state,
+            tag: "loading",
+            filter: action.payload,
+            data: {
+              ...state.data,
+              artikel: { ...state.data.artikel, page: 1 },
+              kategori: { ...state.data.kategori, page: 1, per_page: 10 },
+            }
+          };
+        }
+        case "ALL_KATEGORI": {
+          return {
+            ...state,
+            tag: "loading",
+            data: {
+              ...state.data,
+              kategori: { ...state.data.kategori, page: 1, total_data: 0, total_pages: 0, per_page: 100 },
+            }
           };
         }
         default: {
@@ -227,15 +345,23 @@ export const reducer = (state: State, action: Action): State => {
         case "FETCH": {
           return {
             data: {
-              artikel: [],
-              kategori: [],
+              artikel: {
+                data: [],
+                page: 1,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
+              kategori: {
+                data: [],
+                page: 1,
+                total_data: 0,
+                total_pages: 0,
+                per_page: 10,
+              },
             },
             tag: "loading",
-            page: 1,
-            total_pages: 0,
-            total_data: 0,
             errorMessage: "",
-            per_page: 10,
           };
         }
         default: {
@@ -279,8 +405,8 @@ export const ArtikelProvider = ({ children }: { children: React.ReactNode }) => 
         //   return;
         // }
         Promise.all([
-          api.get("/artikel?", { limit: state.per_page, page: state.page, ...state.filter }),
-          api.get("/kategori"),
+          api.get("/artikel?", { limit: state.data.artikel.per_page, page: state.data.artikel.page, ...state.filter }),
+          api.get("/kategori?", { limit: state.data.kategori.per_page, page: state.data.kategori.page }),
         ]).then((responses) => {
           const [artikel, kategori] = responses;
           if (artikel.data.length === 0) {
@@ -290,11 +416,19 @@ export const ArtikelProvider = ({ children }: { children: React.ReactNode }) => 
 
           commit({
             type: "SUCCESS", payload: {
-              artikel: artikel.data,
-              kategori: kategori.data,
-              total_pages: artikel.total_pages,
-              per_page: artikel.per_page,
-              total_data: artikel.total_data,
+              artikel: {
+                data: artikel.data,
+                page: state.data.artikel.page,
+                total_data: artikel.total_data,
+                total_pages: artikel.total_pages,
+                per_page: artikel.per_page,
+              },
+              kategori: {
+                data: kategori.data,
+                total_data: kategori.total_data,
+                total_pages: kategori.total_pages,
+                per_page: kategori.per_page,
+              },
             }
           });
         }).catch((error) => {
@@ -306,7 +440,7 @@ export const ArtikelProvider = ({ children }: { children: React.ReactNode }) => 
         break;
       }
     }
-  }, [state.data, state.filter, state.filter?.kategori, state.page, state.per_page, state.slug, state.tag, state.total_pages]);
+  }, [state.data.artikel.page, state.data.artikel.per_page, state.data.kategori.page, state.data.kategori.per_page, state.filter, state.slug, state.tag]);
 
   return (
     <ArtikelContext.Provider value={artikelProvider}>

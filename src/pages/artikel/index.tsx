@@ -50,7 +50,7 @@ export default function Artikel() {
               </div>
             ))
           )}
-          {state.data?.artikel.map((item, index) => (
+          {state.data?.artikel.data.map((item, index) => (
             <div className="col-12" key={index}>
               <div className="card overflow-hidden w-100 shadow border-0">
                 <div className="row g-0">
@@ -92,7 +92,7 @@ export default function Artikel() {
 
           <div className="col-12">
             <div className="d-flex justify-content-center">
-              <Pagination page={state.page} total_pages={state.total_pages} onClickNext={onClickNextPage} onClickPrev={onClickPrevPage} onClickPage={(page) => commit({ type: "SET_PAGE", payload: page })} />
+              <Pagination page={state.data.artikel.page} total_pages={state.data.artikel.total_pages} onClickNext={onClickNextPage} onClickPrev={onClickPrevPage} onClickPage={(page) => commit({ type: "SET_PAGE", payload: page })} />
             </div>
           </div>
         </div>
