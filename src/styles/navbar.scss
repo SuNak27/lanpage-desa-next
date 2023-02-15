@@ -1,14 +1,18 @@
 .navbar {
   position: absolute;
   animation: navbar-up 0.5s ease;
+  background-color: $color-light;
 
-  .container .navbar-collapse .navbar-nav .nav-item .nav-link {
-    // background-color: red;
-    font-weight: 600;
-    color: rgb(192, 192, 192);
+  .container .navbar-collapse {
 
-    &.active {
-      color: $color-primary !important;
+    .navbar-nav .nav-item .nav-link {
+      // background-color: red;
+      font-weight: 600;
+      color: rgb(192, 192, 192);
+
+      &.active {
+        color: $color-primary !important;
+      }
     }
   }
 
@@ -30,10 +34,9 @@
 }
 
 .navbar-nav .nav-item {
-
   &:hover {
     .dropdown-menu {
-      transition: .3s;
+      transition: 0.3s;
       opacity: 1;
       visibility: visible;
       top: 100%;
@@ -59,6 +62,7 @@
 .navbar-brand {
   display: flex;
   align-items: center;
+  color: black;
 
   span {
     font-size: 1.3rem;
@@ -69,46 +73,11 @@
 
 .navbar-toggler {
   border: none;
+  color: #9fa2b5;
 
   &:focus {
     border: none;
     box-shadow: none;
-  }
-}
-
-.dropdown-menu {
-  background-color: $color-light;
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  padding: 0.5rem 0.5rem;
-
-  display: block;
-  opacity: 0;
-  visibility: hidden;
-  transition: .3s;
-  margin-top: 0;
-
-  &.fade-up {
-    top: 180%;
-  }
-
-  .dropdown-item {
-    color: $color-dark;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    margin: 0.2rem 0;
-    border-radius: 0.5rem;
-
-    &:hover:not(.active) {
-      background-color: $color-light-primary;
-      color: $color-primary;
-    }
-
-    &.active {
-      background-color: $color-light-primary;
-      color: $color-primary;
-    }
   }
 }
 
@@ -148,6 +117,52 @@
 
     span {
       font-size: 1rem;
+    }
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .navbar:not(.navbar-show) {
+    background-color: transparent;
+  }
+
+  .navbar-brand {
+    color: $color-light;
+  }
+
+  .dropdown-menu {
+    background-color: $color-light;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0.5rem;
+  
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    margin-top: 0;
+  
+    &.fade-up {
+      top: 180%;
+    }
+  
+    .dropdown-item {
+      color: $color-dark;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      margin: 0.2rem 0;
+      border-radius: 0.5rem;
+  
+      &:hover:not(.active) {
+        background-color: $color-light-primary;
+        color: $color-primary;
+      }
+  
+      &.active {
+        background-color: $color-light-primary;
+        color: $color-primary;
+      }
     }
   }
 }

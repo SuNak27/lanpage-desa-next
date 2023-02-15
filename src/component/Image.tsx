@@ -16,7 +16,8 @@ export default function Gambar({ image, width, height, className, type, tag, lay
       if (image !== "") {
         return (
           // eslint-disable-next-line @next/next/no-img-element
-          <img alt="image" src={type == 'link' ? image : process.env.NEXT_PUBLIC_IMAGE_URL + image} className={className} />
+          <img alt="image" src={type == 'link' ? image : process.env.NEXT_PUBLIC_IMAGE_URL + image}
+            width={width} height={height} className={className} />
         );
       } else {
         return (

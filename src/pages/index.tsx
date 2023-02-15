@@ -24,9 +24,6 @@ export default function Home() {
               <div className="card">
                 <div
                   className="card-body"
-                  style={{
-                    maxHeight: "300px",
-                  }}
                 >
                   <h5 className="card-title mb-3 py-3">Berita Terbaru</h5>
                   <Swiper
@@ -60,10 +57,10 @@ export default function Home() {
                     {state.data.info_desa?.artikel?.map((item, index) => (
                       <SwiperSlide key={index}>
                         <div className="card-body row mb-4">
-                          <div className="col-3">
-                            <Gambar image={item.gambar ?? ''} width={250} height={150} tag='img' />
+                          <div className="col-lg-3 text-center">
+                            <Gambar image={item.gambar ?? ''} layout="responsive" className="img-fluid mb-3" tag='img' />
                           </div>
-                          <div className="col-9">
+                          <div className="col-lg-9">
                             <h5 className="card-title">{item.judul}</h5>
                             <div className="card-text">
                               {parse(item.isi.substring(0, 400))}
@@ -95,7 +92,7 @@ export default function Home() {
 
           <Swiper
             modules={[Pagination, Autoplay]}
-            slidesPerView={3}
+            slidesPerView={1}
             loop={false}
             pagination={{ clickable: true }}
             spaceBetween={30}
