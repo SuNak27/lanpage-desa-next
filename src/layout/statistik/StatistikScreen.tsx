@@ -10,7 +10,7 @@ export default function StatistikLayout({ children }: { children: React.ReactNod
   }, [dispatch])
   return (
     <>
-      <div className="container m-5 p-5">
+      <div className="container p-5">
         <div className="row gap-lg-0 gap-5">
           <div className="col-lg-3">
             <div

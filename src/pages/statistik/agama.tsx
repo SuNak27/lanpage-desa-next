@@ -58,77 +58,99 @@ export default function Statistik() {
             </div>
           </div>
           <div className="col-lg-12">
-            <table className="table table-striped-columns table-hover">
-              <thead>
-                <tr>
-                  <th scope="col" className="text-center">No</th>
-                  <th scope="col">Agama</th>
-                  <th scope="col" className="text-center">Jumlah Penduduk</th>
-                  <th scope="col">Laki - Laki</th>
-                  <th scope="col">Perempuan</th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.tag !== 'success' && (
-                  [1, 2, 3, 4, 5].map((item, index) => (
+            <div className="table-responsive">
+              <table className="table table-striped-columns table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" className="text-center"
+                      style={{
+                        minWidth: "50px",
+                      }}
+                    >No</th>
+                    <th scope="col"
+                      style={{
+                        minWidth: "150px",
+                      }}
+                    >Agama</th>
+                    <th scope="col" className="text-center"
+                      style={{
+                        minWidth: "200px",
+                      }}
+                    >Jumlah Penduduk</th>
+                    <th scope="col"
+                      style={{
+                        minWidth: "175px",
+                      }}
+                    >Laki - Laki</th>
+                    <th scope="col"
+                      style={{
+                        minWidth: "175px",
+                      }}
+                    >Perempuan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {state.tag !== 'success' && (
+                    [1, 2, 3, 4, 5].map((item, index) => (
+                      <tr key={index}>
+                        <th scope="row" className="text-center">
+                          <Skeleton width={20} />
+                        </th>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                  {state.data?.agama.data.map((agama, index) => (
                     <tr key={index}>
-                      <th scope="row" className="text-center">
-                        <Skeleton width={20} />
-                      </th>
+                      <th scope="row" className="text-center">{index + 1}</th>
                       <td>
-                        <Skeleton width={100} />
+                        {agama.agama}
                       </td>
                       <td>
-                        <Skeleton width={100} />
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            {agama.jumlah_penduduk} Penduduk
+                          </div>
+                          <div>
+                            <span className="badge bg-primary">
+                              {agama.persen_penduduk}%
+                            </span>
+                          </div>
+                        </div>
                       </td>
                       <td>
-                        <Skeleton width={100} />
+                        <div className="d-flex justify-content-between">
+                          <div>{agama.jumlah_penduduk_laki_laki} Penduduk</div>
+                          <div>
+                            <span className="badge bg-primary">{agama.persen_penduduk_laki_laki}%</span>
+                          </div>
+                        </div>
                       </td>
                       <td>
-                        <Skeleton width={100} />
+                        <div className="d-flex justify-content-between">
+                          <div>{agama.jumlah_penduduk_perempuan} Penduduk</div>
+                          <div>
+                            <span className="badge bg-primary">{agama.persen_penduduk_perempuan}%
+                            </span>
+                          </div>
+                        </div>
                       </td>
                     </tr>
-                  ))
-                )}
-                {state.data?.agama.data.map((agama, index) => (
-                  <tr key={index}>
-                    <th scope="row" className="text-center">{index + 1}</th>
-                    <td>
-                      {agama.agama}
-                    </td>
-                    <td>
-                      <div className="d-flex justify-content-between">
-                        <div>
-                          {agama.jumlah_penduduk} Penduduk
-                        </div>
-                        <div>
-                          <span className="badge bg-primary">
-                            {agama.persen_penduduk}%
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex justify-content-between">
-                        <div>{agama.jumlah_penduduk_laki_laki} Penduduk</div>
-                        <div>
-                          <span className="badge bg-primary">{agama.persen_penduduk_laki_laki}%</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex justify-content-between">
-                        <div>{agama.jumlah_penduduk_perempuan} Penduduk</div>
-                        <div>
-                          <span className="badge bg-primary">{agama.persen_penduduk_perempuan}%
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

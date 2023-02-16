@@ -64,121 +64,143 @@ export default function Statistik() {
             }
           </div>
           <div className="col-lg-12">
-            <table className="table table-striped-columns table-hover">
-              <thead>
-                <tr>
-                  <th scope="col" className="text-center">No</th>
-                  <th scope="col">Rentang Umur</th>
-                  <th scope="col" className="text-center">Jumlah Penduduk</th>
-                  <th scope="col">Laki - Laki</th>
-                  <th scope="col">Perempuan</th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.tag !== 'success' && (
-                  [1, 2, 3, 4, 5].map((item, index) => (
+            <div className="table-responsive-lg">
+              <table className="table table-striped-columns table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" className="text-center"
+                      style={{
+                        minWidth: "50px",
+                      }}
+                    >No</th>
+                    <th scope="col"
+                      style={{
+                        minWidth: "150px",
+                      }}
+                    >Rentang Umur</th>
+                    <th scope="col" className="text-center"
+                      style={{
+                        minWidth: "150px",
+                      }}
+                    >Jumlah Penduduk</th>
+                    <th scope="col"
+                      style={{
+                        minWidth: "200px",
+                      }}
+                    >Laki - Laki</th>
+                    <th scope="col"
+                      style={{
+                        minWidth: "200px",
+                      }}
+                    >Perempuan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {state.tag !== 'success' && (
+                    [1, 2, 3, 4, 5].map((item, index) => (
+                      <tr key={index}>
+                        <th scope="row" className="text-center">
+                          <Skeleton width={20} />
+                        </th>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                        <td>
+                          <Skeleton width={100} />
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                  {state.data?.umur.data.map((umur, index) => (
                     <tr key={index}>
-                      <th scope="row" className="text-center">
-                        <Skeleton width={20} />
-                      </th>
+                      <th scope="row" className="text-center">{index + 1}</th>
                       <td>
-                        <Skeleton width={100} />
+                        {umur.rentang_umur}
                       </td>
                       <td>
-                        <Skeleton width={100} />
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            {umur.jumlah_penduduk} Penduduk
+                          </div>
+                          <div>
+                            <span className="badge bg-primary">
+                              {umur.persen_penduduk}%
+                            </span>
+                          </div>
+                        </div>
                       </td>
                       <td>
-                        <Skeleton width={100} />
+                        <div className="d-flex justify-content-between">
+                          <div>{umur.jumlah_penduduk_laki_laki} Penduduk</div>
+                          <div>
+                            <span className="badge bg-primary">{umur.persen_penduduk_laki_laki}%</span>
+                          </div>
+                        </div>
                       </td>
                       <td>
-                        <Skeleton width={100} />
+                        <div className="d-flex justify-content-between">
+                          <div>{umur.jumlah_penduduk_perempuan} Penduduk</div>
+                          <div>
+                            <span className="badge bg-primary">{umur.persen_penduduk_perempuan}%
+                            </span>
+                          </div>
+                        </div>
                       </td>
                     </tr>
-                  ))
-                )}
-                {state.data?.umur.data.map((umur, index) => (
-                  <tr key={index}>
-                    <th scope="row" className="text-center">{index + 1}</th>
+                  ))}
+                  <tr>
+                    <th scope="row" className="text-center"></th>
+                    <td><strong>Jumlah</strong></td>
                     <td>
-                      {umur.rentang_umur}
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <strong>{state.data?.umur.jumlah_penduduk} Penduduk</strong>
+                        </div>
+                        <div>
+                          <span className="badge bg-primary"><strong>{state.data?.umur.persen_penduduk}%</strong></span>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       <div className="d-flex justify-content-between">
                         <div>
-                          {umur.jumlah_penduduk} Penduduk
+                          <strong>{state.data?.umur.jumlah_penduduk_laki_laki} Penduduk</strong>
                         </div>
                         <div>
                           <span className="badge bg-primary">
-                            {umur.persen_penduduk}%
+                            <strong>
+                              {state.data?.umur?.persen_penduduk_laki_laki}%
+                            </strong>
                           </span>
                         </div>
                       </div>
                     </td>
                     <td>
                       <div className="d-flex justify-content-between">
-                        <div>{umur.jumlah_penduduk_laki_laki} Penduduk</div>
                         <div>
-                          <span className="badge bg-primary">{umur.persen_penduduk_laki_laki}%</span>
+                          <strong>
+                            {state.data?.umur?.jumlah_penduduk_perempuan} Penduduk
+                          </strong>
                         </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="d-flex justify-content-between">
-                        <div>{umur.jumlah_penduduk_perempuan} Penduduk</div>
                         <div>
-                          <span className="badge bg-primary">{umur.persen_penduduk_perempuan}%
+                          <span className="badge bg-primary">
+                            <strong>
+                              {state.data?.umur?.persen_penduduk_perempuan}%
+                            </strong>
                           </span>
                         </div>
                       </div>
                     </td>
                   </tr>
-                ))}
-                <tr>
-                  <th scope="row" className="text-center"></th>
-                  <td><strong>Jumlah</strong></td>
-                  <td>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <strong>{state.data?.umur.jumlah_penduduk} Penduduk</strong>
-                      </div>
-                      <div>
-                        <span className="badge bg-primary"><strong>{state.data?.umur.persen_penduduk}%</strong></span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <strong>{state.data?.umur.jumlah_penduduk_laki_laki} Penduduk</strong>
-                      </div>
-                      <div>
-                        <span className="badge bg-primary">
-                          <strong>
-                            {state.data?.umur?.persen_penduduk_laki_laki}%
-                          </strong>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <strong>
-                          {state.data?.umur?.jumlah_penduduk_perempuan} Penduduk
-                        </strong>
-                      </div>
-                      <div>
-                        <span className="badge bg-primary">
-                          <strong>
-                            {state.data?.umur?.persen_penduduk_perempuan}%
-                          </strong>
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
