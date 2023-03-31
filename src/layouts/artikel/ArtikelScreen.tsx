@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLayoutContext } from "../default";
+import { useLayoutContext } from "../Default";
 import { ArtikelProvider } from "./ArtikelScreen.machine";
 import MainStatistikLayout from "./MainScreen";
 

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
-import { useLayoutContext } from "./default";
+import { useLayoutContext } from "./Default";
 
 type Props = {
   title?: string;

@@ -1,9 +1,9 @@
 import ActiveLink from "@/component/ActiveLink";
 import { useEffect } from "react";
-import { useLayoutContext } from "../default";
-import { StatistikProvider } from "./StatistikScreen.machine";
+import { useLayoutContext } from "../Default";
+import { AboutProvider } from "./AboutScreen.machine";
 
-export default function StatistikLayout({ children }: { children: React.ReactNode }) {
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
   const { dispatch } = useLayoutContext();
   useEffect(() => {
     dispatch({ type: "FETCH" })
@@ -17,29 +17,28 @@ export default function StatistikLayout({ children }: { children: React.ReactNod
               style={{ backgroundColor: '#ebf4ff', top: '6em' }}
               className="p-4 position-sticky rounded-3 about-menu"
             >
-              <h4 className="fw-semibold mb-4">Statistik</h4>
+              <h4 className="fw-semibold mb-4">Tentang Kami</h4>
               <div className="list-group list-group-flush">
-                <ActiveLink href="/statistik" className="list-group-item list-group-item-action"
+                <ActiveLink href="/tentang-kami" className="list-group-item list-group-item-action"
                   activeClassName={'active'} aria-current="true">
-                  Statistik Rentang Umur
+                  Profil Desa
                 </ActiveLink>
-                <ActiveLink href="/statistik/agama" activeClassName={'active'} className="list-group-item list-group-item-action">
-                  Agama
-                </ActiveLink>
+                <ActiveLink href="/tentang-kami/visi-misi" activeClassName={'active'} className="list-group-item list-group-item-action">Visi Misi</ActiveLink>
+                <ActiveLink href="/tentang-kami/aparatur-desa" activeClassName={'active'} className="list-group-item list-group-item-action">Aparatur Desa</ActiveLink>
               </div>
             </div>
           </div>
           <div className="col-lg-9">
             <div className="row">
               <div className="col-lg-12">
-                <StatistikProvider>
-                  {children}
-                </StatistikProvider>
+                <AboutProvider>
+                  <main>{children}</main>
+                </AboutProvider>
               </div>
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }

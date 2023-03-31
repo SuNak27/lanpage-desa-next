@@ -1,6 +1,6 @@
 import Gambar from "@/component/Image";
 import Skeleton from "react-loading-skeleton";
-import { useLayoutContext } from "../default";
+import { useLayoutContext } from "../Default";
 import SideArtikelLayout from "./SideScreen";
 
 export default function MainStatistikLayout({ children }: { children: React.ReactNode }) {

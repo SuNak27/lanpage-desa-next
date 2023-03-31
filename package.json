@@ -11,22 +11,25 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.18",
+    "@chakra-ui/react": "^2.5.4",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@next/font": "13.1.6",
-    "bootstrap": "^5.2.3",
-    "bootstrap-icons": "^1.10.3",
     "chart.js": "^4.2.0",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
-    "html-react-parser": "^3.0.8",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "framer-motion": "^10.10.0",
     "next": "13.1.6",
     "react": "18.2.0",
-    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
     "react-loading-skeleton": "^3.1.0",
-    "sass": "^1.58.0",
     "storybook-addon-next-router": "^4.0.2",
-    "sweetalert2": "^11.7.1",
-    "swiper": "^9.0.2"
+    "swiper": "^9.1.1",
+    "ts-pattern": "^4.2.1",
+    "typescript": "^4.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

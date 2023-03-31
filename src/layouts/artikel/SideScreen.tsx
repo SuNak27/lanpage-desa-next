@@ -1,7 +1,7 @@
 import ActiveLink from "@/component/ActiveLink"
 import Badge from "@/component/Badge"
 import { useArtikelContext } from "@/layout/artikel"
-import { useLayoutContext } from "@/layout/default"
+import { useLayoutContext } from "@/layout/Default"
 import { useEffect } from "react"
 import Skeleton from "react-loading-skeleton"
 
